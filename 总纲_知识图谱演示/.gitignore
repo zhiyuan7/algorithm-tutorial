@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dist-demo/
+examples/dist-demo/
+.slidev/
+.codex/
+output/
+*.log

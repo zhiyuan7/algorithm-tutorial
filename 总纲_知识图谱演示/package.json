@@ -1,0 +1,32 @@
+{
+  "name": "xinhuo-outline-knowledge-presentation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --port 3030",
+    "dev:demo": "slidev demo.md --port 3031",
+    "build": "slidev build slides.md --out dist",
+    "build:demo": "slidev build demo.md --out dist-demo",
+    "export:png": "slidev export slides.md --format png --with-clicks --wait 1600 --timeout 120000 --executable-path \"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --output output/visual-qa",
+    "export:pptx": "slidev export slides.md --format pptx --with-clicks --wait 1600 --timeout 120000 --executable-path \"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --output output/总纲_电影式知识图谱.pptx",
+    "export:pptx-editable": "slidev export slides.md --format pptx-editable --with-clicks --wait 1600 --timeout 120000 --executable-path \"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\" --output output/总纲_电影式知识图谱_可编辑.pptx",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@slidev/cli": "latest",
+    "@slidev/theme-default": "latest",
+    "d3": "latest",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@types/d3": "latest",
+    "playwright-chromium": "latest",
+    "typescript": "~5.9.3",
+    "vue-tsc": "latest"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "playwright-chromium"
+    ]
+  }
+}
