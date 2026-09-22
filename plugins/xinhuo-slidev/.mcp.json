@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "slidev-outline": {
+      "type": "http",
+      "url": "http://localhost:3030/__mcp",
+      "startup_timeout_sec": 10,
+      "tool_timeout_sec": 60
+    }
+  }
+}

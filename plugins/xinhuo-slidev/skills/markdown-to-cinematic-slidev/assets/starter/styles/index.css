@@ -1,0 +1,41 @@
+:root {
+  --deck-bg: #d6bf88;
+  --deck-surface: #ded7ca;
+  --deck-ink: #13254f;
+  --deck-muted: #7d8981;
+  --deck-accent: #163f6f;
+}
+
+.slidev-layout {
+  background: var(--deck-bg);
+  color: var(--deck-ink);
+  font-family: 'Microsoft YaHei', system-ui, sans-serif;
+}
+
+.cover-stage {
+  min-height: 100%;
+  display: grid;
+  place-content: center;
+  gap: 1.2rem;
+  padding: 5rem;
+}
+
+.cover-stage h1 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: 4.5rem;
+  line-height: 1.05;
+  color: var(--deck-ink);
+}
+
+.cover-stage p {
+  max-width: 48rem;
+  margin: 0;
+  color: color-mix(in srgb, var(--deck-ink) 72%, transparent);
+}
+
+.eyebrow {
+  font-size: 0.9rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}

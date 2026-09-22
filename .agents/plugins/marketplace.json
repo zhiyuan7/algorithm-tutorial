@@ -1,0 +1,20 @@
+{
+  "name": "personal",
+  "interface": {
+    "displayName": "Algorithm Tutorial Plugins"
+  },
+  "plugins": [
+    {
+      "name": "xinhuo-slidev",
+      "source": {
+        "source": "local",
+        "path": "./plugins/xinhuo-slidev"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

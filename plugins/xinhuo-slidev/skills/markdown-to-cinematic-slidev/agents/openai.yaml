@@ -1,0 +1,5 @@
+interface:
+  display_name: "Markdown Cinematic Knowledge Graph"
+  short_description: "Turn Markdown into a cinematic Slidev knowledge graph"
+  brand_color: "#D6BF88"
+  default_prompt: "Use $markdown-to-cinematic-slidev to turn this Markdown article into a runnable cinematic knowledge-graph presentation."

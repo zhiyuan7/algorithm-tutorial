@@ -1,0 +1,37 @@
+{
+  "name": "xinhuo-slidev",
+  "version": "0.1.0",
+  "description": "Create cinematic Slidev knowledge-graph presentations from Markdown and edit running decks through Slidev MCP.",
+  "author": {
+    "name": "刘致远",
+    "email": "778808702@qq.com",
+    "url": "https://github.com/zhiyuan7"
+  },
+  "homepage": "https://github.com/zhiyuan7/algorithm-tutorial/tree/main/plugins/xinhuo-slidev",
+  "repository": "https://github.com/zhiyuan7/algorithm-tutorial",
+  "license": "MIT",
+  "keywords": [
+    "slidev",
+    "markdown",
+    "knowledge-graph",
+    "presentation",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "薪火 Slidev",
+    "shortDescription": "把 Markdown 制作为电影式 Slidev 知识图谱演示。",
+    "longDescription": "包含通用 Slidev 编写能力、Markdown 到电影式知识图谱演示的完整工作流，以及连接本地 Slidev 开发服务器的 MCP 工具。",
+    "developerName": "刘致远",
+    "category": "Productivity",
+    "capabilities": [
+      "Slidev authoring",
+      "Cinematic knowledge graphs",
+      "MCP slide editing"
+    ],
+    "websiteURL": "https://github.com/zhiyuan7/algorithm-tutorial",
+    "brandColor": "#D6BF88",
+    "defaultPrompt": "Use $markdown-to-cinematic-slidev to turn this Markdown article into a runnable cinematic Slidev knowledge-graph presentation."
+  },
+  "mcpServers": "./.mcp.json"
+}
