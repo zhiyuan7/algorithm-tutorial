@@ -1,0 +1,19 @@
+{
+  "name": "camera-model-cinematic-slidev",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --port 3038",
+    "build": "slidev build slides.md --out dist",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@slidev/cli": "latest",
+    "@slidev/theme-default": "latest",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vue-tsc": "latest"
+  }
+}

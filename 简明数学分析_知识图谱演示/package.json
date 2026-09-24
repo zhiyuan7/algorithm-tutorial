@@ -1,0 +1,21 @@
+{
+  "name": "concise-mathematical-analysis-knowledge-map",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --port 3047",
+    "build": "slidev build slides.md --out dist",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@slidev/cli": "latest",
+    "@slidev/theme-default": "latest",
+    "d3": "latest",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@types/d3": "latest",
+    "typescript": "~5.9.3",
+    "vue-tsc": "latest"
+  }
+}

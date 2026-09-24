@@ -1,0 +1,25 @@
+{
+  "name": "xinhuo-opencv-knowledge-presentation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --port 3032",
+    "build": "slidev build slides.md --out dist",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@slidev/cli": "latest",
+    "@slidev/theme-default": "latest",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "playwright-chromium": "latest",
+    "typescript": "~5.9.3",
+    "vue-tsc": "latest"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "playwright-chromium"
+    ]
+  }
+}

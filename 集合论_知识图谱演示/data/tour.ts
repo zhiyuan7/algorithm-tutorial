@@ -1,0 +1,48 @@
+import type { TourScene } from './types'
+
+const existenceAll = ['existence-root', 'naive', 'russell', 'universal', 'zfc', 'extensionality', 'separation', 'constructors']
+const existenceEdges = ['h-existence-root-naive', 'h-naive-russell', 'h-naive-universal', 'h-existence-root-zfc', 'h-zfc-extensionality', 'h-zfc-separation', 'h-zfc-constructors', 'r-naive-russell', 'r-universal-zfc', 'r-separation-russell']
+const constructionAll = ['construction-root', 'ordered-pair', 'relation', 'equivalence', 'order', 'naturals', 'recursion', 'integers', 'rationals', 'reals', 'extensions']
+const infinityAll = ['infinity-root', 'bijection', 'countable', 'diagonal', 'cantor', 'ch', 'independence']
+
+export const tour: TourScene[] = [
+  { id: 'opening', map: 'existence-boundary', focus: 'existence-root', framing: 'node', mode: 'detail', detailKey: 'opening', visibleNodes: ['existence-root'], visibleEdges: [], chapter: '集合论 · 第一问', headline: '任意性质都能形成集合吗？' },
+  { id: 'naive-detail', map: 'existence-boundary', focus: 'naive', framing: 'node', mode: 'detail', detailKey: 'intuition', visibleNodes: ['existence-root', 'naive'], visibleEdges: ['h-existence-root-naive'], chapter: '朴素集合论', headline: '从性质直接跳到存在' },
+  { id: 'russell-detail', map: 'existence-boundary', focus: 'russell', framing: 'node', mode: 'detail', detailKey: 'contradiction', visibleNodes: ['existence-root', 'naive', 'russell'], visibleEdges: ['h-existence-root-naive', 'h-naive-russell', 'r-naive-russell'], chapter: '罗素悖论', headline: '自指让成员关系同时成立又不成立' },
+  { id: 'universal-detail', map: 'existence-boundary', focus: 'universal', framing: 'node', mode: 'detail', detailKey: 'noUniversal', visibleNodes: ['existence-root', 'naive', 'russell', 'universal'], visibleEdges: ['h-existence-root-naive', 'h-naive-russell', 'h-naive-universal'], chapter: '全体集合', headline: '“所有集合”本身不能是一个集合' },
+  { id: 'zfc-overview', map: 'existence-boundary', focus: 'zfc', framing: 'subtree', mode: 'detail', detailKey: 'overview', visibleNodes: existenceAll, visibleEdges: existenceEdges.slice(0, 7), chapter: '公理化转向', headline: '存在不再来自描述，而来自公理许可' },
+  { id: 'extensionality-detail', map: 'existence-boundary', focus: 'extensionality', framing: 'node', mode: 'detail', detailKey: 'identity', visibleNodes: existenceAll, visibleEdges: existenceEdges.slice(0, 7), chapter: '外延公理', headline: '集合由它有哪些元素决定' },
+  { id: 'separation-detail', map: 'existence-boundary', focus: 'separation', framing: 'node', mode: 'detail', detailKey: 'bounded', visibleNodes: existenceAll, visibleEdges: existenceEdges, chapter: '分离公理模式', headline: '只允许在既有集合内部筛选' },
+  { id: 'constructors-detail', map: 'existence-boundary', focus: 'constructors', framing: 'node', mode: 'detail', detailKey: 'toolkit', visibleNodes: existenceAll, visibleEdges: existenceEdges, chapter: '受控构造', headline: '公理是一组可复用的集合操作' },
+  { id: 'existence-overview', map: 'existence-boundary', focus: 'existence-root', framing: 'all', mode: 'overview', visibleNodes: existenceAll, visibleEdges: existenceEdges, chapter: '第一张知识图谱', headline: '悖论把直觉改造成明确规则' },
+  { id: 'morph-foundation-construction', map: 'morph-foundation-construction', framing: 'all', mode: 'overview', visibleNodes: 'all', visibleEdges: [], chapter: '变形过渡', headline: '存在规则开始成为构造材料' },
+
+  { id: 'construction-opening', map: 'construction-ladder', focus: 'construction-root', framing: 'node', mode: 'detail', detailKey: 'opening', visibleNodes: ['construction-root'], visibleEdges: [], chapter: '集合论 · 第二问', headline: '无序集合如何长出数学结构？' },
+  { id: 'pair-detail', map: 'construction-ladder', focus: 'ordered-pair', framing: 'node', mode: 'detail', detailKey: 'kuratowski', visibleNodes: ['construction-root', 'ordered-pair'], visibleEdges: ['h-construction-root-ordered-pair'], chapter: '有序对', headline: '用无序集合保存第一与第二位置' },
+  { id: 'relation-detail', map: 'construction-ladder', focus: 'relation', framing: 'node', mode: 'detail', detailKey: 'relation', visibleNodes: ['construction-root', 'ordered-pair', 'relation'], visibleEdges: ['h-construction-root-ordered-pair', 'h-ordered-pair-relation'], chapter: '关系', headline: '关系只是笛卡尔积的一个子集' },
+  { id: 'relation-function', map: 'construction-ladder', focus: 'relation', framing: 'node', mode: 'detail', detailKey: 'function', visibleNodes: ['construction-root', 'ordered-pair', 'relation'], visibleEdges: ['h-construction-root-ordered-pair', 'h-ordered-pair-relation'], chapter: '函数', headline: '存在且唯一，把关系收紧为函数' },
+  { id: 'equivalence-detail', map: 'construction-ladder', focus: 'equivalence', framing: 'node', mode: 'detail', detailKey: 'partition', visibleNodes: ['construction-root', 'ordered-pair', 'relation', 'equivalence'], visibleEdges: ['h-construction-root-ordered-pair', 'h-ordered-pair-relation', 'h-ordered-pair-equivalence', 'r-relation-equivalence'], chapter: '等价关系', headline: '关系把集合切成互不重叠的类' },
+  { id: 'order-detail', map: 'construction-ladder', focus: 'order', framing: 'node', mode: 'detail', detailKey: 'hierarchy', visibleNodes: ['construction-root', 'ordered-pair', 'relation', 'equivalence', 'order'], visibleEdges: ['h-construction-root-ordered-pair', 'h-ordered-pair-relation', 'h-ordered-pair-equivalence', 'h-ordered-pair-order', 'r-relation-equivalence'], chapter: '序关系', headline: '偏序、全序、良序逐层加强' },
+  { id: 'naturals-detail', map: 'construction-ladder', focus: 'naturals', framing: 'node', mode: 'detail', detailKey: 'construction', visibleNodes: ['construction-root', 'ordered-pair', 'relation', 'equivalence', 'order', 'naturals'], visibleEdges: 'all', chapter: '自然数', headline: '从空集与后继长出自然数' },
+  { id: 'naturals-induction', map: 'construction-ladder', focus: 'naturals', framing: 'node', mode: 'detail', detailKey: 'induction', visibleNodes: ['construction-root', 'ordered-pair', 'relation', 'equivalence', 'order', 'naturals'], visibleEdges: 'all', chapter: 'Peano 结构', headline: '归纳原则把构造封闭成整个 ℕ' },
+  { id: 'recursion-detail', map: 'construction-ladder', focus: 'recursion', framing: 'node', mode: 'detail', detailKey: 'arithmetic', visibleNodes: ['construction-root', 'naturals', 'recursion'], visibleEdges: 'all', chapter: '递归', headline: '加法与乘法也需要被定义' },
+  { id: 'integers-detail', map: 'construction-ladder', focus: 'integers', framing: 'node', mode: 'detail', detailKey: 'quotient', visibleNodes: constructionAll.slice(0, 8), visibleEdges: 'all', chapter: '整数', headline: '用有序对和等价类制造负数' },
+  { id: 'rationals-detail', map: 'construction-ladder', focus: 'rationals', framing: 'node', mode: 'detail', detailKey: 'quotient', visibleNodes: constructionAll.slice(0, 9), visibleEdges: 'all', chapter: '有理数', headline: '同一个比值的不同表示归为一类' },
+  { id: 'reals-detail', map: 'construction-ladder', focus: 'reals', framing: 'node', mode: 'detail', detailKey: 'cut', visibleNodes: constructionAll.slice(0, 10), visibleEdges: 'all', chapter: '实数', headline: '用有理数集合填补有理数轴的空隙' },
+  { id: 'completeness-detail', map: 'construction-ladder', focus: 'reals', framing: 'node', mode: 'detail', detailKey: 'completeness', visibleNodes: constructionAll.slice(0, 10), visibleEdges: 'all', chapter: '完备性', headline: '确界、收敛、紧致与 Cauchy 的联系' },
+  { id: 'extensions-detail', map: 'construction-ladder', focus: 'extensions', framing: 'node', mode: 'detail', detailKey: 'losses', visibleNodes: constructionAll, visibleEdges: 'all', chapter: '数系扩张', headline: '获得新能力，也失去旧性质' },
+  { id: 'construction-overview', map: 'construction-ladder', focus: 'construction-root', framing: 'all', mode: 'overview', visibleNodes: constructionAll, visibleEdges: 'all', chapter: '第二张知识图谱', headline: '集合成为编码数学结构的通用材料' },
+  { id: 'morph-construction-infinity', map: 'morph-construction-infinity', framing: 'all', mode: 'overview', visibleNodes: 'all', visibleEdges: [], chapter: '变形过渡', headline: '从“怎样构造”转向“到底多大”' },
+
+  { id: 'infinity-opening', map: 'infinity-ladder', focus: 'infinity-root', framing: 'node', mode: 'detail', detailKey: 'opening', visibleNodes: ['infinity-root'], visibleEdges: [], chapter: '集合论 · 第三问', headline: '无法数完时，怎样比较大小？' },
+  { id: 'bijection-detail', map: 'infinity-ladder', focus: 'bijection', framing: 'node', mode: 'detail', detailKey: 'compare', visibleNodes: ['infinity-root', 'bijection'], visibleEdges: ['h-infinity-root-bijection'], chapter: '基数', headline: '用一一对应代替逐个数完' },
+  { id: 'countable-detail', map: 'infinity-ladder', focus: 'countable', framing: 'node', mode: 'detail', detailKey: 'enumerate', visibleNodes: ['infinity-root', 'bijection', 'countable'], visibleEdges: ['h-infinity-root-bijection', 'h-bijection-countable'], chapter: '可数无限', headline: 'ℕ、ℤ 与 ℚ 可以一样大' },
+  { id: 'diagonal-detail', map: 'infinity-ladder', focus: 'diagonal', framing: 'node', mode: 'detail', detailKey: 'escape', visibleNodes: ['infinity-root', 'bijection', 'countable', 'diagonal'], visibleEdges: ['h-infinity-root-bijection', 'h-bijection-countable', 'h-bijection-diagonal', 'r-countable-diagonal'], chapter: '实数不可数', headline: '对角线构造永远逃出列表' },
+  { id: 'cantor-detail', map: 'infinity-ladder', focus: 'cantor', framing: 'node', mode: 'detail', detailKey: 'theorem', visibleNodes: infinityAll.slice(0, 5), visibleEdges: 'all', chapter: 'Cantor 定理', headline: '幂集总能制造更大的无限' },
+  { id: 'ch-detail', map: 'infinity-ladder', focus: 'ch', framing: 'node', mode: 'detail', detailKey: 'question', visibleNodes: infinityAll.slice(0, 6), visibleEdges: 'all', chapter: 'Hilbert 第一问题', headline: 'ℵ₀ 与连续统之间还有第三种基数吗？' },
+  { id: 'independence-detail', map: 'infinity-ladder', focus: 'independence', framing: 'all', mode: 'detail', detailKey: 'result', visibleNodes: infinityAll, visibleEdges: 'all', chapter: '连续统假设', headline: 'ZFC 既不能证明 CH，也不能证明 ¬CH' },
+]
+
+export function getScene(step: number): TourScene {
+  return tour[Math.min(Math.max(0, step), tour.length - 1)]
+}

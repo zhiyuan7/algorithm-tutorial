@@ -1,0 +1,20 @@
+{
+  "name": "xinhuo-set-theory-knowledge-presentation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --port 3030",
+    "build": "slidev build slides.md --out dist",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@slidev/cli": "latest",
+    "@slidev/theme-default": "latest",
+    "d3": "latest",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vue-tsc": "latest"
+  }
+}

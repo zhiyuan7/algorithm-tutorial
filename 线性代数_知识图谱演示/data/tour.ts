@@ -1,0 +1,65 @@
+import type { TourScene } from './types'
+
+const languageAll = ['linear-language-root', 'algebra', 'vector-space', 'basis-system', 'coordinates', 'linear-map', 'matrix-representation']
+const languageEdges = [
+  'h-linear-language-root-algebra', 'h-linear-language-root-vector-space',
+  'h-vector-space-basis-system', 'h-vector-space-coordinates',
+  'h-linear-language-root-linear-map', 'h-linear-map-matrix-representation',
+  'r-algebra-space', 'r-basis-coordinates', 'r-coordinates-matrix', 'r-map-matrix',
+]
+
+const matrixAll = ['matrix-perspectives-root', 'active-transform', 'composition', 'orthogonal', 'passive-basis', 'similarity', 'matrix-capability', 'rank', 'svd', 'matrix-space']
+const matrixEdges = [
+  'h-matrix-perspectives-root-active-transform', 'h-active-transform-composition', 'h-active-transform-orthogonal',
+  'h-matrix-perspectives-root-passive-basis', 'h-passive-basis-similarity',
+  'h-matrix-perspectives-root-matrix-capability', 'h-matrix-capability-rank', 'h-matrix-capability-svd',
+  'h-matrix-perspectives-root-matrix-space',
+  'r-active-passive', 'r-composition-similarity', 'r-orthogonal-svd', 'r-rank-svd',
+]
+
+const invariantAll = ['invariant-geometry-root', 'determinant', 'eigenstructure', 'spectral-theorem', 'quadratic-form', 'symmetric-part', 'positive-definite']
+const invariantEdges = [
+  'h-invariant-geometry-root-determinant', 'h-invariant-geometry-root-eigenstructure', 'h-eigenstructure-spectral-theorem',
+  'h-invariant-geometry-root-quadratic-form', 'h-quadratic-form-symmetric-part', 'h-quadratic-form-positive-definite',
+  'r-det-eigen', 'r-spectral-positive', 'r-symmetric-positive',
+]
+
+export const tour: TourScene[] = [
+  { id: 'opening', map: 'linear-language', focus: 'linear-language-root', framing: 'node', mode: 'detail', detailKey: 'opening', visibleNodes: ['linear-language-root'], visibleEdges: [], chapter: '线性代数', headline: '坐标会改变，什么仍然保持？' },
+  { id: 'algebra-structure', map: 'linear-language', focus: 'algebra', framing: 'node', mode: 'detail', detailKey: 'structure', visibleNodes: ['linear-language-root', 'algebra'], visibleEdges: ['h-linear-language-root-algebra'], chapter: '代数结构', headline: '不问对象由什么做成，先问它满足什么规律' },
+  { id: 'space-axioms', map: 'linear-language', focus: 'vector-space', framing: 'node', mode: 'detail', detailKey: 'axioms', visibleNodes: ['linear-language-root', 'algebra', 'vector-space'], visibleEdges: ['h-linear-language-root-algebra', 'h-linear-language-root-vector-space', 'r-algebra-space'], chapter: '线性空间', headline: '加法与数乘定义了内部结构' },
+  { id: 'space-subspace', map: 'linear-language', focus: 'vector-space', framing: 'node', mode: 'detail', detailKey: 'subspace', visibleNodes: ['linear-language-root', 'algebra', 'vector-space'], visibleEdges: ['h-linear-language-root-algebra', 'h-linear-language-root-vector-space', 'r-algebra-space'], chapter: '子空间', headline: '两个封闭性，继承八条公理' },
+  { id: 'basis-span', map: 'linear-language', focus: 'basis-system', framing: 'node', mode: 'detail', detailKey: 'span', visibleNodes: ['linear-language-root', 'algebra', 'vector-space', 'basis-system'], visibleEdges: ['h-linear-language-root-algebra', 'h-linear-language-root-vector-space', 'h-vector-space-basis-system', 'r-algebra-space'], chapter: '张成', headline: '所有线性组合能够到达哪里' },
+  { id: 'basis-independence', map: 'linear-language', focus: 'basis-system', framing: 'node', mode: 'detail', detailKey: 'independence', visibleNodes: ['linear-language-root', 'algebra', 'vector-space', 'basis-system'], visibleEdges: ['h-linear-language-root-algebra', 'h-linear-language-root-vector-space', 'h-vector-space-basis-system', 'r-algebra-space'], chapter: '线性无关', headline: '生成系统中是否隐藏着冗余' },
+  { id: 'basis-dimension', map: 'linear-language', focus: 'basis-system', framing: 'node', mode: 'detail', detailKey: 'basis', visibleNodes: ['linear-language-root', 'algebra', 'vector-space', 'basis-system'], visibleEdges: ['h-linear-language-root-algebra', 'h-linear-language-root-vector-space', 'h-vector-space-basis-system', 'r-algebra-space'], chapter: '基与维数', headline: '张成和无关的交点，恰好是基' },
+  { id: 'coordinates-meaning', map: 'linear-language', focus: 'coordinates', framing: 'node', mode: 'detail', detailKey: 'meaning', visibleNodes: ['linear-language-root', 'vector-space', 'basis-system', 'coordinates'], visibleEdges: ['h-linear-language-root-vector-space', 'h-vector-space-basis-system', 'h-vector-space-coordinates', 'r-basis-coordinates'], chapter: '坐标', headline: '向量不是那串数字，数字只是所选基下的编码' },
+  { id: 'map-definition', map: 'linear-language', focus: 'linear-map', framing: 'node', mode: 'detail', detailKey: 'definition', visibleNodes: ['linear-language-root', 'vector-space', 'basis-system', 'coordinates', 'linear-map'], visibleEdges: ['h-linear-language-root-vector-space', 'h-vector-space-basis-system', 'h-vector-space-coordinates', 'h-linear-language-root-linear-map', 'r-basis-coordinates'], chapter: '线性映射', headline: '知道基向量去了哪里，就知道整个映射' },
+  { id: 'matrix-columns', map: 'linear-language', focus: 'matrix-representation', framing: 'node', mode: 'detail', detailKey: 'columns', visibleNodes: languageAll, visibleEdges: languageEdges, chapter: '矩阵表示', headline: '矩阵的每一列，都是一个基向量的像' },
+  { id: 'matrix-data', map: 'linear-language', focus: 'matrix-representation', framing: 'node', mode: 'detail', detailKey: 'data', visibleNodes: languageAll, visibleEdges: languageEdges, chapter: '矩阵与数据', headline: '矩阵也可以直接组织方程、图像与关系' },
+  { id: 'language-overview', map: 'linear-language', focus: 'linear-language-root', framing: 'all', mode: 'overview', visibleNodes: languageAll, visibleEdges: languageEdges, chapter: '第一张图', headline: '基是抽象结构通往坐标计算的桥' },
+  { id: 'before-representation-morph', map: 'linear-language', focus: 'linear-language-root', framing: 'all', mode: 'concept', visibleNodes: languageAll, visibleEdges: languageEdges, chapter: '视角转换', headline: '从“结构如何表示”转向“矩阵如何作用”' },
+  { id: 'representation-morph', map: 'morph-representation', framing: 'all', mode: 'overview', visibleNodes: 'all', visibleEdges: [], chapter: '变形过渡', headline: '同一矩阵，两种几何读法' },
+  { id: 'active-motion', map: 'matrix-perspectives', focus: 'active-transform', framing: 'subtree', mode: 'detail', detailKey: 'motion', visibleNodes: ['matrix-perspectives-root', 'active-transform', 'composition', 'orthogonal'], visibleEdges: ['h-matrix-perspectives-root-active-transform', 'h-active-transform-composition', 'h-active-transform-orthogonal'], chapter: '主动变换', headline: '坐标系不动，向量按线性规则运动' },
+  { id: 'passive-duality', map: 'matrix-perspectives', focus: 'passive-basis', framing: 'subtree', mode: 'detail', detailKey: 'duality', visibleNodes: ['matrix-perspectives-root', 'active-transform', 'composition', 'orthogonal', 'passive-basis', 'similarity'], visibleEdges: ['h-matrix-perspectives-root-active-transform', 'h-active-transform-composition', 'h-active-transform-orthogonal', 'h-matrix-perspectives-root-passive-basis', 'h-passive-basis-similarity', 'r-active-passive', 'r-composition-similarity'], chapter: '被动换基', headline: '向量不动，观察它的坐标系在变' },
+  { id: 'composition-product', map: 'matrix-perspectives', focus: 'composition', framing: 'node', mode: 'detail', detailKey: 'product', visibleNodes: ['matrix-perspectives-root', 'active-transform', 'composition', 'orthogonal', 'passive-basis', 'similarity'], visibleEdges: ['h-matrix-perspectives-root-active-transform', 'h-active-transform-composition', 'h-active-transform-orthogonal', 'h-matrix-perspectives-root-passive-basis', 'h-passive-basis-similarity', 'r-active-passive', 'r-composition-similarity'], chapter: '矩阵乘法', headline: '行乘列不是人为技巧，而是映射复合的必然形式' },
+  { id: 'similarity-change', map: 'matrix-perspectives', focus: 'similarity', framing: 'node', mode: 'detail', detailKey: 'change', visibleNodes: ['matrix-perspectives-root', 'active-transform', 'composition', 'orthogonal', 'passive-basis', 'similarity'], visibleEdges: ['h-matrix-perspectives-root-active-transform', 'h-active-transform-composition', 'h-active-transform-orthogonal', 'h-matrix-perspectives-root-passive-basis', 'h-passive-basis-similarity', 'r-active-passive', 'r-composition-similarity'], chapter: '换基与相似', headline: '相似矩阵是同一变换的不同观察窗口' },
+  { id: 'orthogonal-geometry', map: 'matrix-perspectives', focus: 'orthogonal', framing: 'node', mode: 'detail', detailKey: 'geometry', visibleNodes: ['matrix-perspectives-root', 'active-transform', 'composition', 'orthogonal', 'passive-basis', 'similarity'], visibleEdges: ['h-matrix-perspectives-root-active-transform', 'h-active-transform-composition', 'h-active-transform-orthogonal', 'h-matrix-perspectives-root-passive-basis', 'h-passive-basis-similarity', 'r-active-passive', 'r-composition-similarity'], chapter: '正交矩阵', headline: '保持内积，就同时保持长度、夹角与距离' },
+  { id: 'matrix-space-vector', map: 'matrix-perspectives', focus: 'matrix-space', framing: 'node', mode: 'detail', detailKey: 'vector', visibleNodes: ['matrix-perspectives-root', 'active-transform', 'composition', 'orthogonal', 'passive-basis', 'similarity', 'matrix-space'], visibleEdges: ['h-matrix-perspectives-root-active-transform', 'h-active-transform-composition', 'h-active-transform-orthogonal', 'h-matrix-perspectives-root-passive-basis', 'h-passive-basis-similarity', 'h-matrix-perspectives-root-matrix-space', 'r-active-passive', 'r-composition-similarity'], chapter: '矩阵空间', headline: '矩阵是工具，也是 mn 维空间中的向量' },
+  { id: 'rank-image', map: 'matrix-perspectives', focus: 'rank', framing: 'node', mode: 'detail', detailKey: 'image', visibleNodes: matrixAll, visibleEdges: matrixEdges, chapter: '秩', headline: '秩测量映射之后还剩下多少独立方向' },
+  { id: 'rank-maps', map: 'matrix-perspectives', focus: 'rank', framing: 'node', mode: 'detail', detailKey: 'maps', visibleNodes: matrixAll, visibleEdges: matrixEdges, chapter: '秩—零化度', headline: '满秩把秩、单射、满射与可逆连成一条链' },
+  { id: 'svd-decomposition', map: 'matrix-perspectives', focus: 'svd', framing: 'node', mode: 'detail', detailKey: 'decomposition', visibleNodes: matrixAll, visibleEdges: matrixEdges, chapter: '奇异值分解', headline: '任意实矩阵都是旋转、按方向缩放、再旋转' },
+  { id: 'matrix-overview', map: 'matrix-perspectives', focus: 'matrix-perspectives-root', framing: 'all', mode: 'overview', visibleNodes: matrixAll, visibleEdges: matrixEdges, chapter: '第二张图', headline: '矩阵同时记录作用、观察框架与映射能力' },
+  { id: 'before-invariant-morph', map: 'matrix-perspectives', focus: 'matrix-perspectives-root', framing: 'all', mode: 'concept', visibleNodes: matrixAll, visibleEdges: matrixEdges, chapter: '视角转换', headline: '从“矩阵如何作用”转向“变换保留什么”' },
+  { id: 'invariant-morph', map: 'morph-invariants', framing: 'all', mode: 'overview', visibleNodes: 'all', visibleEdges: [], chapter: '变形过渡', headline: '映射能力重组为体积、方向与能量' },
+  { id: 'determinant-volume', map: 'invariant-geometry', focus: 'determinant', framing: 'node', mode: 'detail', detailKey: 'volume', visibleNodes: ['invariant-geometry-root', 'determinant'], visibleEdges: ['h-invariant-geometry-root-determinant'], chapter: '行列式', headline: '一个数，压缩了整个变换的体积效应' },
+  { id: 'eigen-direction', map: 'invariant-geometry', focus: 'eigenstructure', framing: 'node', mode: 'detail', detailKey: 'direction', visibleNodes: ['invariant-geometry-root', 'determinant', 'eigenstructure'], visibleEdges: ['h-invariant-geometry-root-determinant', 'h-invariant-geometry-root-eigenstructure', 'r-det-eigen'], chapter: '特征结构', headline: '在所有改变中，找到方向不变的子空间' },
+  { id: 'spectral-diagonalize', map: 'invariant-geometry', focus: 'spectral-theorem', framing: 'node', mode: 'detail', detailKey: 'diagonalize', visibleNodes: ['invariant-geometry-root', 'determinant', 'eigenstructure', 'spectral-theorem'], visibleEdges: ['h-invariant-geometry-root-determinant', 'h-invariant-geometry-root-eigenstructure', 'h-eigenstructure-spectral-theorem', 'r-det-eigen'], chapter: '谱定理', headline: '对称性保证一组正交特征基' },
+  { id: 'quadratic-energy', map: 'invariant-geometry', focus: 'quadratic-form', framing: 'node', mode: 'detail', detailKey: 'energy', visibleNodes: ['invariant-geometry-root', 'determinant', 'eigenstructure', 'spectral-theorem', 'quadratic-form'], visibleEdges: ['h-invariant-geometry-root-determinant', 'h-invariant-geometry-root-eigenstructure', 'h-eigenstructure-spectral-theorem', 'h-invariant-geometry-root-quadratic-form', 'r-det-eigen'], chapter: '二次型', headline: '把向量方向汇总成一个标量能量' },
+  { id: 'symmetric-vanish', map: 'invariant-geometry', focus: 'symmetric-part', framing: 'node', mode: 'detail', detailKey: 'vanish', visibleNodes: invariantAll, visibleEdges: invariantEdges, chapter: '对称化', headline: '反对称部分在 xᵀAx 中自动消失' },
+  { id: 'positive-eigenvalues', map: 'invariant-geometry', focus: 'positive-definite', framing: 'node', mode: 'detail', detailKey: 'eigenvalues', visibleNodes: invariantAll, visibleEdges: invariantEdges, chapter: '正定性', headline: '特征值符号决定每个方向的能量正负' },
+  { id: 'invariant-overview', map: 'invariant-geometry', focus: 'invariant-geometry-root', framing: 'all', mode: 'overview', visibleNodes: invariantAll, visibleEdges: invariantEdges, chapter: '第三张图', headline: '结构、表示与不变几何，构成一种统一语言' },
+]
+
+export function getScene(step: number): TourScene {
+  return tour[Math.min(Math.max(0, step), tour.length - 1)]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "cpp-operations-functions-knowledge-map",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --port 3030",
+    "build": "slidev build slides.md --out dist",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@slidev/cli": "^52.0.0",
+    "@slidev/theme-default": "^0.25.0",
+    "d3": "^7.9.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "typescript": "~5.9.3",
+    "vue-tsc": "^3.1.0"
+  }
+}
