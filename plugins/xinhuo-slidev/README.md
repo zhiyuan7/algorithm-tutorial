@@ -37,7 +37,7 @@ powershell -ExecutionPolicy Bypass -File .\plugins\xinhuo-slidev\scripts\install
 `slidev-outline` 使用 Slidev 开发服务器自带的 Streamable HTTP MCP 端点。先启动需要编辑的演示：
 
 ```powershell
-cd .\总纲_知识图谱演示
+cd .\course-overview-slidev
 pnpm install --frozen-lockfile
 pnpm dev
 ```
