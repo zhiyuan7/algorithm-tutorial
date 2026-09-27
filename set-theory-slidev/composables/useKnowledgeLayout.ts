@@ -18,26 +18,26 @@ function flatten(root: KnowledgeNodeData): KnowledgeNodeData[] {
 const placements: Record<KnowledgeMapData['layout'], Record<string, Placement>> = {
   foundation: {
     'existence-root': [800, 105, 340, 108, 0],
-    naive: [420, 290, 250, 104, 1],
+    naive: [390, 290, 270, 104, 1],
     russell: [245, 510, 230, 100, 2],
-    universal: [565, 510, 270, 100, 2],
+    universal: [550, 510, 310, 100, 2],
     zfc: [1120, 290, 270, 104, 1],
-    extensionality: [855, 535, 230, 100, 2],
-    separation: [1120, 535, 250, 100, 2],
-    constructors: [1390, 535, 250, 100, 2],
+    extensionality: [920, 535, 250, 100, 2],
+    separation: [1240, 535, 290, 100, 2],
   },
   construction: {
-    'construction-root': [800, 92, 350, 104, 0],
+    'construction-root': [830, 92, 350, 104, 0],
     'ordered-pair': [405, 250, 230, 96, 1],
     relation: [155, 430, 220, 92, 2],
+    tuples: [155, 625, 250, 92, 3],
     equivalence: [405, 430, 235, 92, 2],
-    order: [655, 430, 220, 92, 2],
+    order: [670, 430, 220, 92, 2],
     naturals: [1050, 250, 245, 96, 1],
-    recursion: [840, 430, 220, 92, 2],
-    integers: [1110, 430, 210, 92, 2],
-    rationals: [1110, 585, 205, 92, 3],
-    reals: [1110, 730, 205, 92, 4],
-    extensions: [1390, 730, 245, 92, 5],
+    recursion: [945, 430, 220, 92, 2],
+    integers: [1240, 430, 210, 92, 2],
+    rationals: [1240, 625, 205, 92, 3],
+    reals: [1240, 805, 205, 92, 4],
+    extensions: [1580, 805, 300, 92, 5],
   },
   infinity: {
     'infinity-root': [800, 100, 350, 108, 0],
@@ -77,7 +77,7 @@ export function layoutKnowledgeMap(map: KnowledgeMapData) {
   }))
   const byId = new Map(nodes.map(node => [node.id, node]))
   const hierarchyEdges: LayoutEdge[] = nodes
-    .filter(node => node.parentId)
+    .filter(node => node.parentId && !map.relations.some(relation => relation.source === node.parentId && relation.target === node.id))
     .map(node => ({
       id: `h-${node.parentId}-${node.id}`,
       source: byId.get(node.parentId!)!,

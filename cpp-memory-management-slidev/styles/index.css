@@ -374,10 +374,10 @@ body,
   z-index: 25;
   top: 126px;
   right: 54px;
-  width: 482px;
-  max-height: 590px;
+  width: 530px;
+  max-height: 534px;
   box-sizing: border-box;
-  padding: 34px 36px 30px;
+  padding: 24px 28px 22px;
   overflow: hidden;
   border: 1.5px solid rgba(19, 37, 79, .45);
   border-top: 9px solid var(--blue);
@@ -405,49 +405,46 @@ body,
 
 .detail-panel h2 {
   color: var(--ink);
-  font-size: 33px;
-  line-height: 1.12;
+  font-size: 31px;
+  line-height: 1.2;
   font-weight: 900;
 }
 
 .detail-statement {
-  margin-top: 20px !important;
+  margin-top: 14px !important;
   color: var(--ink);
-  font-size: 21px;
+  font-size: 19px;
   line-height: 1.55;
   font-weight: 750;
 }
 
 .detail-formula {
-  margin-top: 22px !important;
-  padding: 14px 16px;
+  margin-top: 14px;
+  padding: 8px 12px;
   border-left: 5px solid var(--teal);
   background: rgba(57, 109, 128, .10);
   color: var(--blue);
-  font-family: Cambria, "Times New Roman", serif;
-  font-size: 20px;
-  line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: .01em;
+  font-size: 17px;
 }
+.detail-formula .katex-display { margin: 0; }
 
 .detail-explanation,
 .detail-example {
-  margin-top: 17px !important;
+  margin-top: 12px !important;
   color: var(--ink-muted);
   font-size: 16px;
   line-height: 1.62;
 }
 
 .detail-list {
-  margin: 18px 0 0;
+  margin: 12px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .detail-list li {
   position: relative;
-  margin-top: 9px;
+  margin-top: 7px;
   padding-left: 21px;
   color: var(--ink-muted);
   font-size: 15px;
@@ -466,8 +463,8 @@ body,
 }
 
 .detail-footnote {
-  margin-top: 18px !important;
-  padding-top: 14px;
+  margin-top: 12px !important;
+  padding-top: 10px;
   border-top: 1px solid rgba(19, 37, 79, .18);
   color: var(--brown);
   font-size: 13px;
@@ -608,6 +605,45 @@ body,
 .memory-morph .morph-title { transition-delay: 480ms; }
 
 @media (max-width: 1000px) {
-  .detail-panel { right: 34px; width: 440px; }
+  .detail-panel { right: 34px; width: 530px; }
   .stage-header { left: 40px; right: 36px; }
 }
+
+/* Markdown examples and memory diagrams share the paper/ink palette. */
+.detail-code { margin-top: 14px; }
+.detail-code pre {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--tan);
+  border-radius: 12px;
+  background: var(--paper-soft) !important;
+  white-space: pre;
+  font-family: Consolas, "DejaVu Sans Mono", "Noto Sans CJK SC", monospace;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.detail-code code { font-family: inherit; font-size: inherit; background: transparent; }
+.detail-table { width: 100%; margin-top: 12px; border-collapse: collapse; font-size: 13px; line-height: 1.35; }
+.detail-table th { text-align: left; color: var(--blue); background: var(--paper-soft); }
+.detail-table th, .detail-table td { padding: 2px 7px; border-bottom: 1px solid var(--tan); }
+.detail-table td:first-child { font-family: Consolas, "Noto Sans CJK SC", monospace; }
+.has-table .detail-code { margin-top: 10px; }
+.has-table .detail-code pre { padding: 8px 12px; font-size: 13px; line-height: 1.5; }
+.has-table .detail-footnote { font-size: 12px; }
+.memory-diagram { margin: 14px 0 0; color: var(--ink); }
+.memory-diagram figcaption { margin-bottom: 7px; color: var(--ink-muted); font-size: 12px; }
+.memory-cells { display: flex; border: 1px solid var(--teal); border-radius: 8px; overflow: hidden; }
+.memory-cells > div { flex: 1; padding: 8px; border-right: 1px solid var(--teal); background: var(--paper-soft); text-align: center; font-size: 14px; font-weight: 700; }
+.memory-cells > div:last-child { border-right: 0; }
+.memory-cells small { display: block; margin-top: 3px; color: var(--ink-muted); font-size: 12px; font-weight: 400; }
+.struct-cells > div:first-child { flex: 1; }
+.struct-cells > div:nth-child(2) { flex: 3; }
+.struct-cells > div:last-child { flex: 4; }
+.memory-cells .padding-cell { background: var(--tan); }
+.scope-timeline { padding-right: 6px; }
+.outer-life { padding: 8px 10px; border: 1.5px solid var(--blue); border-radius: 8px; background: var(--paper-soft); color: var(--blue); font-size: 13px; }
+.inner-life { width: 65%; margin: 7px 0 0 12%; padding: 7px 8px; border: 1.5px solid var(--ochre); border-radius: 8px; color: var(--brown); background: var(--paper); }
+.scope-events { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--ink-muted); }
+.knowledge-edge.relation path { stroke-linejoin: miter; stroke-linecap: butt; }
+/* Keep a single custom bullet when the Slidev theme adds list markers. */
+.detail-panel .detail-list li { list-style: none; }

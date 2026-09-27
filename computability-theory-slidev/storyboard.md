@@ -1,55 +1,38 @@
-# 《可计算理论》电影式演示分镜
+# 《可计算理论》演示分镜
 
-## 演示结构
+封面和结尾各一页；中间由一个持续舞台承载 28 个讲解场景（clicks 0–27）。下表场景编号与画面右上角一致，场景 1 对应 clicks=0。
 
-- 封面：1 张。
-- 持续 KnowledgeStage：1 张 Slidev slide，28 个 click scene（0–27）。
-- 结尾：1 张。
-- 三张独立图谱：可计算性、复杂度、图灵完备。
-- 两段显式 morph：A→B、B→C。
+| 场景 | 焦点 | 可见内容 | 讲解目标 |
+| ---: | --- | --- | --- |
+| 1 | 能不能算 | 根问题 | 程序应该给出怎样的保证 |
+| 2 | 可识别 | 根与可识别 | YES 总能被认出，不出现具体难题 |
+| 3 | 可判定 | 根、并列定义与虚线包含关系 | YES、NO 都必须回答 |
+| 4 | 停机问题 | 可识别与停机问题 | 提出问题，再给现代形式定义 |
+| 5 | 模拟 | 同一局部分支 | 观察停机说明可识别 |
+| 6 | 等待 | 同一局部分支 | 没停下来不能推出永不停机 |
+| 7 | 对角线反设 | 停机问题与证明节点 | 假设总能正确判断的 H |
+| 8 | 反转行为 | 同上 | 预测会停就循环，否则停机 |
+| 9 | 自指 | 同上 | D 读取自身编码导致矛盾 |
+| 10 | 可计算性回顾 | 恢复完整可计算性结构 | 可识别却不可判定 |
+| 11 | 可判定入口 | 只保留根与可判定 | 保证结束后再问代价，避免旧分支遮挡 |
+| 12 | 视角转换 | 可判定范围内并列 P、NP；停机在右侧范围外 | 分清资源代价与不可判定性 |
+| 13 | 要算多久 | 复杂度根问题 | 输入增长与资源增长 |
+| 14 | P 与 NP | 可判定任务与并列 P、NP | 快速求解与快速验证 |
+| 15 | P 的定义 | 可判定任务与 P | 固定次幂的多项式时间 |
+| 16 | P 的例子 | 同上 | 一次扫描找最大值 |
+| 17 | NP | 可判定任务与 NP | 有限长度证据、快速验证与指数枚举 |
+| 18 | SAT 定义 | NP 与 SAT | 缩写与布尔可满足性 |
+| 19 | SAT 证据 | 同上 | 代入赋值、快速检查 |
+| 20 | P 是否等于 NP | SAT、开放问题和必要的 P 关联 | 快速验证能否变成快速求解 |
+| 21 | 复杂度回顾 | 恢复完整复杂度结构 | P 包含于 NP，NP 都可判定 |
+| 22 | 转向机器 | 复杂度整图 | 从问题代价转向系统能力 |
+| 23 | 视角转换 | 类别收束为资源视角，展开通用计算 | 两个框架的联系 |
+| 24 | 图灵完备 | 系统根问题与图灵完备 | 模拟任意图灵机 |
+| 25 | 构件 | 资源、存储与控制流 | 存状态、按状态推动计算，面板不遮挡节点 |
+| 26 | 分支、循环与递归 | 资源与控制流 | 选择与重复放在一起讲 |
+| 27 | 能力边界 | 图灵完备与边界 | 图灵完备仍无法判定停机 |
+| 28 | 综合回顾 | 恢复完整通用计算结构 | 能力、代价、边界各自的作用 |
 
-## 分镜表
+## 视觉验收
 
-| Step | Active map | Focus | Camera framing | Visible context | Narration goal |
-| ---: | --- | --- | --- | --- | --- |
-| 0 | computability | computability-root | node | 根问题 | 建立“算法承诺什么” |
-| 1 | computability | recognizable | subtree | Recognizable 分支 | YES 可识别，NO 可等待 |
-| 2 | computability | decidable | node | 祖先路径 | YES/NO 都保证停机 |
-| 3 | computability | recognizable | all | 全包含结构 | `Decidable ⊊ Recognizable` |
-| 4 | computability | atm | node | Recognizable 与 `A_TM` | 通过模拟识别接受 |
-| 5 | computability | atm | node | 同上 | 区分 `A_TM` 与 `HALT_TM` |
-| 6 | computability | diagonal | node | `A_TM` 证明分支 | 反设判定器 H |
-| 7 | computability | diagonal | node | 同上 | 构造反转预测的 D |
-| 8 | computability | diagonal | node | 同上 | 自指得到矛盾 |
-| 9 | computability | computability-root | all | 图谱 A 全貌 | 形成可计算性边界 |
-| 10 | computability | decidable | all | 图谱 A 全貌 | 将 Decidable 作为复杂度入口 |
-| 11 | morph-a-b | decidable | all | A→B 映射 | “是否结束”转为“要多久” |
-| 12 | complexity | complexity-root | node | 复杂度根问题 | 资源增长而非秒表数字 |
-| 13 | complexity | p | node | P 与祖先 | 固定次幂的多项式时间 |
-| 14 | complexity | p | node | 同上 | 最大值线性扫描 |
-| 15 | complexity | exponential | node | SAT 暴力分支 | 指数很慢但有限 |
-| 16 | complexity | np | subtree | NP 分支 | certificate 与验证器 |
-| 17 | complexity | sat | node | NP、SAT | 布尔赋值作为证据 |
-| 18 | complexity | p | all | P、NP、Decidable | 快速求解必然可快速验证 |
-| 19 | complexity | open-question | node | P 与 NP | `P = NP?` 仍未知 |
-| 20 | complexity | decidable | all | 图谱 B 全貌 | `P ⊆ NP ⊆ Decidable` |
-| 21 | complexity | complexity-root | all | 图谱 B 全貌 | 从问题分类转向机器能力 |
-| 22 | morph-b-c | turing-complete | all | B→C 映射 | 资源类别折叠为计算系统 |
-| 23 | universality | turing-complete | subtree | 图谱 C 主干 | 模拟任意图灵机 |
-| 24 | universality | resources | subtree | 资源与三个构件 | 通用计算的直观构件 |
-| 25 | universality | factorial | node | 资源分支 | `n!` 解释无固定上限 |
-| 26 | universality | boundary | node | 能力与边界 | 图灵完备不越过不可计算性 |
-| 27 | universality | universality-root | all | 图谱 C 全貌 | 能力、代价、边界综合 |
-
-## 视觉审计关键状态
-
-- 封面：标题与右侧圆环不可重叠。
-- Step 3：Decidable、Recognizable 的包含关系及边标签可读。
-- Step 8：对角线证明详情卡不溢出。
-- Step 9：图谱 A overview 无节点重叠。
-- Step 11：A→B morph 的来源、问题重写与目标结构均清楚。
-- Step 17：SAT 详情卡、公式和周边节点同时可辨。
-- Step 20：图谱 B 全貌能读出 `P ⊆ NP ⊆ Decidable`。
-- Step 22：B→C morph 保留“可计算任务”与“资源刻度”的语义。
-- Step 25：阶乘详情卡无裁切。
-- Step 27：最终 overview 与结尾页保持总纲配色一致。
+以 1600 × 900 和 1280 × 720 的 16:9 浏览器画面检查：可见节点之间无遮挡，节点不进入详情面板，公式完整显示。检查两段转场的开头、中间、结束，确认不可判定分界位于可判定范围的右侧，P 与 NP 同层出现。检查虚线使用直角折点，实线保留平滑曲线。回顾场景必须恢复各自整图。

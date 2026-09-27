@@ -7,5 +7,8 @@
     "allowJs": false,
     "skipLibCheck": true
   },
-  "include": ["**/*.ts", "**/*.vue"]
+  "include": [
+    "**/*.ts",
+    "**/*.vue"
+  ]
 }

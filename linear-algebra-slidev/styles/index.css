@@ -374,10 +374,10 @@ body,
   z-index: 25;
   top: 126px;
   right: 54px;
-  width: 482px;
-  max-height: 590px;
+  width: 520px;
+  max-height: 534px;
   box-sizing: border-box;
-  padding: 34px 36px 30px;
+  padding: 24px 28px;
   overflow: hidden;
   border: 1.5px solid rgba(19, 37, 79, .45);
   border-top: 9px solid var(--blue);
@@ -403,7 +403,8 @@ body,
   letter-spacing: .13em;
 }
 
-.detail-panel h2 {
+.slidev-layout .detail-panel h2 {
+  margin: 0;
   color: var(--ink);
   font-size: 33px;
   line-height: 1.12;
@@ -411,36 +412,35 @@ body,
 }
 
 .detail-statement {
-  margin-top: 20px !important;
+  margin-top: 16px !important;
   color: var(--ink);
   font-size: 21px;
-  line-height: 1.55;
+  line-height: 1.48;
   font-weight: 750;
 }
 
 .detail-formula {
-  margin-top: 22px !important;
-  padding: 14px 16px;
+  margin-top: 14px !important;
+  padding: 10px 12px;
   border-left: 5px solid var(--teal);
   background: rgba(57, 109, 128, .10);
   color: var(--blue);
-  font-family: Cambria, "Times New Roman", serif;
   font-size: 20px;
   line-height: 1.35;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: .01em;
 }
 
 .detail-explanation,
 .detail-example {
-  margin-top: 17px !important;
+  margin-top: 14px !important;
   color: var(--ink-muted);
   font-size: 16px;
-  line-height: 1.62;
+  line-height: 1.48;
 }
 
 .detail-list {
-  margin: 18px 0 0;
+  margin: 14px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -465,9 +465,13 @@ body,
   background: var(--ochre);
 }
 
+.slidev-layout .detail-list li::marker {
+  content: '';
+}
+
 .detail-footnote {
-  margin-top: 18px !important;
-  padding-top: 14px;
+  margin-top: 14px !important;
+  padding-top: 10px;
   border-top: 1px solid rgba(19, 37, 79, .18);
   color: var(--brown);
   font-size: 13px;
@@ -652,6 +656,10 @@ body,
 }
 
 @media (max-width: 1000px) {
-  .detail-panel { right: 34px; width: 440px; }
   .stage-header { left: 40px; right: 36px; }
 }
+
+.math-text .katex { font-size: 1em; }
+.detail-formula .katex-display { margin: 0; }
+.detail-formula .katex { font-size: 1.04em; }
+.node-subtitle .katex { font-size: 1em; }

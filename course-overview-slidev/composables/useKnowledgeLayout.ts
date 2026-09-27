@@ -17,7 +17,7 @@ function flatten(root: KnowledgeNodeData): KnowledgeNodeData[] {
 function cycleLayout(map: KnowledgeMapData): LayoutNode[] {
   const byId = new Map(flatten(map.root).map(node => [node.id, node]))
   const placements: Record<string, [number, number, number, number, number]> = {
-    'cycle-root': [800, 450, 330, 116, 0],
+    'science-root': [800, 450, 330, 116, 0],
     reality: [800, 145, 260, 110, 1],
     induction: [1215, 450, 280, 116, 1],
     theory: [800, 755, 260, 110, 1],
@@ -31,20 +31,22 @@ function cycleLayout(map: KnowledgeMapData): LayoutNode[] {
     width,
     height,
     depth,
-    parentId: id === 'cycle-root' ? undefined : 'cycle-root',
+    parentId: id === 'science-root' ? undefined : 'science-root',
   }))
 }
 
 function treeLayout(map: KnowledgeMapData): LayoutNode[] {
   const root = hierarchy(map.root)
-  const engine = tree<KnowledgeNodeData>().size([1120, 520])
+  const engine = tree<KnowledgeNodeData>().nodeSize([300, 170])
   engine(root)
-  return root.descendants().map(item => ({
+  const positioned = root.descendants()
+  const centerX = (Math.min(...positioned.map(item => item.x!)) + Math.max(...positioned.map(item => item.x!))) / 2
+  return positioned.map(item => ({
     id: item.data.id,
     data: item.data,
-    x: item.x! + 240,
+    x: item.x! - centerX + WORLD_WIDTH / 2,
     y: item.y! + 120,
-    width: item.depth === 0 ? 350 : item.depth === 1 ? 270 : 190,
+    width: item.depth === 0 ? 350 : item.depth === 1 ? 270 : 240,
     height: item.depth === 0 ? 116 : item.depth === 1 ? 108 : 98,
     depth: item.depth,
     parentId: item.parent?.data.id,

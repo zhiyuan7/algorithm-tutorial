@@ -28,14 +28,30 @@ const activeMap = computed(() => knowledgeMaps[activeMapId.value])
 const layout = computed(() => layouts[activeMapId.value])
 const nodes = computed(() => layout.value.nodes)
 const edges = computed(() => layout.value.edges)
-const camera = useCamera(scene, nodes)
-
-const visibleNodeIds = computed(() => scene.value.visibleNodes === 'all'
-  ? new Set(nodes.value.map(node => node.id))
-  : new Set(scene.value.visibleNodes))
-const visibleEdgeIds = computed(() => scene.value.visibleEdges === 'all'
-  ? new Set(edges.value.map(edge => edge.id))
-  : new Set(scene.value.visibleEdges))
+const visibleNodeIds = computed(() => {
+  const requested = scene.value.visibleNodes === 'all'
+    ? new Set(nodes.value.map(node => node.id))
+    : new Set(scene.value.visibleNodes)
+  if (scene.value.mode !== 'detail' || scene.value.framing !== 'node') return requested
+  const branch = new Set(scene.value.contextNodes ?? [])
+  let cursor = nodes.value.find(node => node.id === scene.value.focus)
+  while (cursor) {
+    branch.add(cursor.id)
+    cursor = cursor.parentId ? nodes.value.find(node => node.id === cursor?.parentId) : undefined
+  }
+  return new Set([...requested].filter(id => branch.has(id)))
+})
+const framedNodes = computed(() => nodes.value.filter(node => visibleNodeIds.value.has(node.id)))
+const visibleEdgeIds = computed(() => {
+  const requested = scene.value.visibleEdges === 'all'
+    ? new Set(edges.value.map(edge => edge.id))
+    : new Set(scene.value.visibleEdges)
+  return new Set(edges.value
+    .filter(edge => requested.has(edge.id) && visibleNodeIds.value.has(edge.source.id) && visibleNodeIds.value.has(edge.target.id))
+    .map(edge => edge.id))
+})
+const framedEdges = computed(() => edges.value.filter(edge => visibleEdgeIds.value.has(edge.id)))
+const camera = useCamera(scene, framedNodes, framedEdges)
 const dimNodeIds = computed(() => new Set(scene.value.dimNodes ?? []))
 const activeNode = computed(() => nodes.value.find(node => node.id === scene.value.focus))
 const activeDetail = computed(() => {
@@ -50,7 +66,7 @@ function isActiveEdge(id: string) {
 </script>
 
 <template>
-  <main class="knowledge-stage">
+  <main class="knowledge-stage" :data-scene-id="scene.id" :data-map-id="scene.map">
     <KnowledgeOverview :chapter="scene.chapter" :headline="scene.headline" :step="step" :total="tour.length" />
 
     <ComputabilityComplexityMorph v-if="scene.map === 'morph-a-b'" :key="scene.id" />
@@ -83,6 +99,6 @@ function isActiveEdge(id: string) {
     </svg>
 
     <DetailPanel :node="activeNode?.data" :detail="activeDetail" :visible="scene.mode === 'detail' && !!activeDetail" />
-    <div class="stage-corner-label">可计算理论 · Knowledge Map</div>
+    <div class="stage-corner-label">可计算理论 · 能力、代价与边界</div>
   </main>
 </template>

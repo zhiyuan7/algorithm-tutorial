@@ -375,9 +375,9 @@ body,
   top: 126px;
   right: 54px;
   width: 482px;
-  max-height: 590px;
+  max-height: 552px;
   box-sizing: border-box;
-  padding: 34px 36px 30px;
+  padding: 24px 28px;
   overflow: hidden;
   border: 1.5px solid rgba(19, 37, 79, .45);
   border-top: 9px solid var(--blue);
@@ -411,18 +411,17 @@ body,
 }
 
 .detail-statement {
-  margin-top: 20px !important;
+  margin-top: 14px !important;
   color: var(--ink);
-  font-size: 21px;
-  line-height: 1.55;
+  font-size: 19px;
+  line-height: 1.45;
   font-weight: 750;
 }
 
 .detail-formula {
-  margin-top: 22px !important;
+  margin-top: 16px !important;
   padding: 14px 16px;
-  white-space: pre-line;
-  overflow-wrap: anywhere;
+
   border-left: 5px solid var(--teal);
   background: rgba(57, 109, 128, .10);
   color: var(--blue);
@@ -530,8 +529,8 @@ body,
   transition: transform 1200ms var(--ease-cinematic), opacity 500ms ease 600ms;
 }
 .expression-morph.entered .morph-source {
-  transform: translateX(375px) scale(.8);
-  opacity: 0;
+  transform: translateX(0) scale(1);
+  opacity: 1;
 }
 .morph-target {
   justify-self: end;
@@ -587,3 +586,31 @@ body,
   transition: opacity 500ms ease 900ms, transform 600ms var(--ease-cinematic) 900ms;
 }
 .expression-morph.entered .morph-conclusion { opacity: 1; transform: translateY(0); }
+
+/* Mathematics is rendered by KaTeX; code comes from fenced Markdown examples. */
+.detail-formula .katex-display { margin: 0; }
+.detail-formula .katex { font-size: 1em; }
+.detail-code { margin-top: 16px; }
+.detail-code pre {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--edge);
+  border-left: 5px solid var(--teal);
+  border-radius: 10px;
+  background: var(--paper-soft) !important;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.55;
+  tab-size: 4;
+}
+.detail-code code { font-family: Consolas, "Noto Sans Mono", monospace; }
+.detail-code .line { white-space: pre; }
+.knowledge-edge.relation path { stroke-linecap: butt; stroke-linejoin: miter; }
+
+/* Override theme heading spacing inside the fixed-height teaching panel. */
+.slidev-layout .detail-panel h2 { margin: 0; }
+.slidev-layout .detail-panel p { line-height: 1.5; }
+.slidev-layout .detail-panel .detail-footnote { font-size: 12px; line-height: 1.45; }
+.slidev-layout .detail-code pre { font-size: 13px; line-height: 1.5; }
+
+.knowledge-node foreignObject { overflow: visible; }

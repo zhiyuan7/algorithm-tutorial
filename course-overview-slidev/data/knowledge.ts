@@ -1,94 +1,86 @@
 import type { KnowledgeMapData, KnowledgeNodeData } from './types'
 
-const cycleRoot: KnowledgeNodeData = {
-  id: 'cycle-root',
-  title: '科学认识循环',
-  subtitle: 'Reality · Model · Theory · Experiment',
-  summary: '从现实出发，经过建模与演绎，再回到现实检验',
+const scienceRoot: KnowledgeNodeData = {
+  id: 'science-root',
+  title: '科学',
+  subtitle: '从认识论讨论科学',
+  summary: '如何获得知识，如何检查认识的可靠性与边界',
   accent: '#13254F',
   details: {
     opening: {
-      eyebrow: '核心问题',
-      statement: '我们如何从混杂的现实中，得到可检验、可修正的知识？',
-      explanation: '这不是一条从数据直通真理的直线，而是一个不断往返的循环。',
+      eyebrow: '本体论与认识论',
+      statement: '本体论问“世界存在什么”，认识论问“我们如何认识世界”。',
+      explanation: '科学面对独立于我们认识而存在的现实。本文从认识论出发，讨论科学如何形成知识、检验知识，以及理解认识的边界。',
+      bullets: ['本体论：存在什么，现实如何构成', '认识论：如何认识，凭什么相信', '科学：通过观测、建模、推理与实验获得认识'],
     },
   },
   children: [
     {
-      id: 'reality',
-      title: '现实',
-      subtitle: 'Reality',
-      summary: '问题切割出的现实片段',
-      accent: '#163F6F',
+      id: 'reality', title: '现实', subtitle: 'Reality',
+      summary: '问题切割出的现实片段', accent: '#163F6F',
       details: {
         complexity: {
-          eyebrow: '第一部分 · 现实世界',
-          statement: '科学面对的从来不是“整个现实”，而是研究问题切割出的某一方面。',
+          eyebrow: '现实世界',
+          statement: '科学面对的是研究问题选定的现实侧面。',
           explanation: '机器人运动同时受到摩擦、齿隙、温度、电流波动、机械弹性和传感器噪声影响。任何一种描述都只能保留其中一部分。',
           bullets: ['研究问题决定看见什么', '观测工具决定记录什么', '抽象决定保留什么'],
         },
       },
     },
     {
-      id: 'induction',
-      title: '第一座桥',
-      subtitle: '归纳与建模',
-      summary: '把观测压缩为可操作的模型',
-      accent: '#396D80',
+      id: 'induction', title: '归纳与建模', subtitle: 'Induction & Modeling',
+      summary: '把观测组织为可操作的模型', accent: '#396D80',
       details: {
         pipeline: {
-          eyebrow: 'Induction & Modeling',
+          eyebrow: '从观测到模型',
           statement: '建模的每一步都在选择信息，抽象因此总是相对的。',
-          formula: '观测  →  数据处理  →  变量选择  →  模型构建',
+          formula: String.raw`\begin{aligned}\text{观测}&\to\text{数据处理}\\&\to\text{变量选择}\to\text{模型构建}\end{aligned}`,
           explanation: '原始图像不直接告诉我们距离。图像处理先提取像素高度，建模再把像素量连到物理量。',
         },
         monocular: {
           eyebrow: '具体范例 · 单目测距',
-          statement: '已知装甲板真实高度 H，从图像中测得像素高度 h，就可用针孔模型估计距离 Z。',
-          formula: 'h / f = H / Z    ⇒    Z = fH / h',
-          bullets: ['图像处理产生观测量 h', '焦距 f 和已知高度 H 提供尺度', '模型建立 h 与 Z 的关系'],
-          footnote: '理想针孔模型是对成像过程的抽象。',
+          statement: '已知真实高度 $H$，测得像素高度 $h$，用针孔模型估计距离 $Z$。',
+          formula: String.raw`\frac{h}{f}=\frac{H}{Z}\quad\Longrightarrow\quad Z=\frac{fH}{h}`,
+          bullets: ['图像处理产生观测量 $h$', '焦距 $f$ 和已知高度 $H$ 提供尺度', '模型建立 $h$ 与 $Z$ 的关系'],
+          footnote: '正对相机、忽略畸变的理想近似；焦距与图像高度均用像素单位。',
         },
       },
     },
     {
-      id: 'theory',
-      title: '理论',
-      subtitle: 'Theory',
-      summary: '对一类现象的一般规律',
-      accent: '#624F6B',
+      id: 'theory', title: '理论', subtitle: 'Theory',
+      summary: '对一类现象的一般规律', accent: '#624F6B',
       details: {
         distinction: {
-          eyebrow: '第三部分 · 理论与模型',
-          statement: '理论描述一般规律，模型描述某个具体系统如何组织。',
-          explanation: '经典力学的 F = ma 不直接告诉我们一个具体单摆怎样运动。还需要给出长度、质量、角度与约束。',
+          eyebrow: '一般规律与解释体系',
+          statement: '理论把一类现象的一般规律组织成可以解释和推理的体系。',
+          explanation: '理论使我们能够从已知条件推出结论。要讨论某个具体对象，还需要模型明确它的结构、变量与约束。',
+          bullets: ['理论说明一般规律', '模型表示具体系统', '理论与模型共同产生预测'],
         },
         pendulum: {
-          eyebrow: '从一般规律到具体方程',
-          statement: '单摆模型选择角度 θ 作为状态，再把牛顿力学施加到模型上。',
-          formula: 'F = ma    ⇒    θ̈ = −(g/l) sinθ    ⇒    θ̈ + (g/l) sinθ = 0',
-          bullets: ['理论提供演绎规则', '模型提供对象结构', '初始条件决定具体轨迹'],
+          eyebrow: '牛顿第二定律与单摆模型',
+          statement: '一般规律与具体结构共同给出单摆方程。',
+          formula: String.raw`\begin{aligned}\sum\mathbf{F}&=m\mathbf{a}\\ml\ddot\theta&=-mg\sin\theta\\\ddot\theta+\frac{g}{l}\sin\theta&=0\end{aligned}`,
+          explanation: '模型取摆球为质点，摆线无质量且不可伸长，忽略阻力与摩擦。沿切向应用牛顿第二定律，初始条件再确定轨迹。',
+          footnote: '在惯性参考系中，$l$ 为摆长，$m$ 为质量，$\\theta$ 为偏离竖直方向的角度。',
         },
       },
     },
     {
-      id: 'deduction',
-      title: '第二座桥',
-      subtitle: '演绎与实验',
-      summary: '从假说推出预测，再用现实检验',
-      accent: '#B5855F',
+      id: 'deduction', title: '演绎与实验', subtitle: 'Deduction & Experiment',
+      summary: '从假说推出预测，再用现实检验', accent: '#B5855F',
       details: {
         method: {
-          eyebrow: 'Hypothetico-Deductive Method',
-          statement: '一个科学假说必须能推出可观测后果，实验结果再反过来约束假说。',
-          formula: 'H ⇒ P      ¬P ⇒ ¬H      P ⇏ H',
-          explanation: '否定预测可以迫使我们检查假说或辅助条件，但预测成立并不能独占性地证明假说。',
+          eyebrow: '假说—演绎方法',
+          statement: '从假说推出可观测后果，再用实验结果约束假说。',
+          formula: String.raw`\begin{gathered}H\Rightarrow P\\\neg P\Rightarrow\neg H\qquad P\nRightarrow H\end{gathered}`,
+          explanation: '预测失败时，需要检查假说或辅助条件；预测成立也不能独占性地证明假说。',
+          footnote: '逆否推理要求其他前提保持成立；支持不等于绝对证明。',
         },
         yolo: {
           eyebrow: '具体范例 · 目标检测',
-          statement: '如果目标像素面积越小，YOLO 的检测性能越低，那么只改变距离就应该得到可重复的性能下降。',
-          formula: '1m  ·  2m  ·  3m  ·  4m  ·  5m',
-          bullets: ['保持光照与目标类别尽量不变', '统计 mAP 或 recall', '结果支持假说，或迫使修改假说'],
+          statement: '假设目标像素面积越小，检测性能越低：只增加距离，应当观察到性能下降。',
+          formula: String.raw`1\,\mathrm{m},\ 2\,\mathrm{m},\ 3\,\mathrm{m},\ 4\,\mathrm{m},\ 5\,\mathrm{m}`,
+          bullets: ['保持光照与目标类别尽量不变', '用大量图片统计 mAP 或 recall', '结果支持假说，或促使重新检查假说'],
         },
       },
     },
@@ -96,129 +88,142 @@ const cycleRoot: KnowledgeNodeData = {
 }
 
 const paradigmRoot: KnowledgeNodeData = {
-  id: 'paradigms-root',
-  title: '科学的两种范式',
-  subtitle: 'Formal Sciences & Natural Sciences',
-  summary: '一边研究规则可以推出什么，一边检验世界实际如何',
-  accent: '#13254F',
+  id: 'paradigms-root', title: '科学的两种范式',
+  subtitle: '形式科学与自然科学',
+  summary: '区分研究方式，再讨论形式科学的现实来源与边界', accent: '#13254F',
   children: [
     {
-      id: 'formal',
-      title: '形式科学',
-      subtitle: 'Formal Sciences',
-      summary: '接受一组规则，研究它们能推出什么',
-      accent: '#624F6B',
+      id: 'formal', title: '形式科学', subtitle: 'Formal Sciences',
+      summary: '接受一组规则，研究它们能推出什么', accent: '#624F6B',
       details: {
         paradigm: {
-          eyebrow: '范式 A',
-          statement: '形式科学首先追问：如果接受某些基本规则，哪些结论必然随之成立？',
-          explanation: '数学、逻辑和理论计算机科学可以研究多套形式体系，而无需先判定哪一套就是现实空间。',
+          eyebrow: '形式科学的问法',
+          statement: '如果接受某些基本规则，哪些结论必然随之成立？',
+          explanation: '数学、逻辑与理论计算机科学可以研究多套形式体系，无需先判定哪一套就是现实空间。',
         },
       },
       children: [
         {
-          id: 'axiom',
-          title: '公理',
-          subtitle: '系统请求接受的起点',
-          summary: '明确的基本前提，重点在于一致性与独立性',
-          accent: '#ACA6BF',
+          id: 'axiom', title: '公理', subtitle: '形式系统的起点',
+          summary: '基本前提；一致性与独立性需要分别检查', accent: '#ACA6BF',
           details: {
             meaning: {
               eyebrow: '什么是公理',
-              statement: 'αἴτημα原意接近“被要求接受的内容”。在形式系统中，公理不需依靠直觉或经验作为证明。',
-              explanation: '公理可以做不同选择，但系统需要检查一致性，还要辨别某条公理是否能从其他公理推出。',
+              statement: '公理是形式体系要求接受的基本前提，在该体系中不以证明作为起点。',
+              explanation: 'αἴτημα原意接近“被要求接受的内容”。公理可以作不同选择；系统是否推出矛盾，与某条公理是否冗余，是两种问题。',
             },
             euclid: {
               eyebrow: '《几何原本》 · 五条公设',
-              statement: '前四条规定直线、延长、圆与直角，第五条公设则规定平行结构。',
+              statement: '前四条规定直线、延长、圆与直角，第五条约束平行结构。',
               bullets: ['任意两点可连成直线', '有限线段可继续延长', '任意圆心和半径可作圆', '所有直角相等', '平行结构由第五公设约束'],
             },
             independence: {
               eyebrow: '第五公设的独立性',
-              statement: '只要构造一个满足前四条、却违反第五条的模型，就说明第五公设无法由前四条推出。',
-              formula: 'M ⊨ Σ   且   M ⊨ ¬P    ⇒    Σ ⊬ P',
-              example: '庞加莱圆盘模型用欧氏圆盘内的测地线实现双曲几何。过直线外一点，可有多条与已知直线不相交的测地线。',
-              footnote: '⊢ 表示句法可证，⊨ 表示语义满足。',
+              statement: '构造满足其余公理、却违反第五公设的模型，就能说明第五公设不能由其余公理推出。',
+              formula: String.raw`\begin{gathered}\mathcal{M}\models\Sigma,\quad\mathcal{M}\models\neg P\\\Longrightarrow\quad\Sigma\nvdash P\end{gathered}`,
+              example: '庞加莱圆盘模型实现双曲几何：过直线外一点，可有多条与已知直线不相交的测地线。',
+              footnote: '$\\Sigma$ 包含中立几何所需公理；$\\vdash$ 表示句法可证，$\\models$ 表示语义满足。',
             },
           },
         },
         {
-          id: 'godel',
-          title: '不完备性',
-          subtitle: 'Gödel',
-          summary: '足够强的一致形式系统存在内在边界',
-          accent: '#644A56',
+          id: 'materiality', title: '唯物性', subtitle: '形式科学与现实',
+          summary: '认识的来源、现实的广阔性、形式的边界', accent: '#396D80',
           details: {
-            first: {
-              eyebrow: '第一不完备定理',
-              statement: '对能表达基本算术的、有效公理化且一致的形式系统 T，存在 T 内既不能证明也不能否定的命题。',
-              formula: 'G ≈ “G 在系统 T 中不可证明”',
-              explanation: '哥德尔编码把符号、公式与证明对应到自然数，使算术能够在系统内谈论“可证明性”。',
+            overview: {
+              eyebrow: '形式科学的唯物性如何体现',
+              statement: '形式能够独立推演，但人的形式认识仍然与现实相连。',
+              bullets: ['认识过程：形式的理解始于现实经验', '现实的广阔性：形式可能找到现实原型', '公理体系的边界：形式揭示现实的侧面'],
             },
-            second: {
-              eyebrow: '第二不完备定理',
-              statement: '如果 T 一致、有效公理化且足够强，那么 T 无法在自身内部证明自己的一致性。',
-              formula: 'T 一致    ⇒    T ⊬ Con(T)',
-              explanation: '更强的理论可以证明较弱理论的一致性，但问题会继续向上移动。',
+          },
+          children: [
+            {
+              id: 'origin', title: '认识的起点', subtitle: '现实经验与抽象',
+              summary: '从具体对象中抽象出数量和关系', accent: '#163F6F',
+              details: {
+                learning: {
+                  eyebrow: '第一点 · 认识的过程',
+                  statement: '人们最初理解形式，往往从现实对象与操作开始。',
+                  formula: '1+1=2',
+                  explanation: '一个苹果加一个苹果，数出两个苹果；抽去颜色、材质和用途，留下数量关系。',
+                  footnote: '这说明形式理解的来源；公理化算术中的证明仍依赖定义与规则。',
+                },
+              },
+            },
+            {
+              id: 'prototype', title: '现实的广阔性', subtitle: '形式可能找到原型',
+              summary: '暂时无用，不等于没有认识价值', accent: '#9AAE8F',
+              details: {
+                transfer: {
+                  eyebrow: '第二点 · 现实的广阔性',
+                  statement: '现实超出当下的经验，形式可能在其中找到原型。',
+                  explanation: '双曲几何研究负曲率空间；钩织实物可展示相关结构。非欧几何也拓展了描述现实的语言。',
+                  bullets: ['形式研究可以先于实际用途', '研究信念鼓励寻找新的对应关系'],
+                  footnote: '实物是有限近似；广义相对论采用伪黎曼几何，并非简单的双曲平面。',
+                },
+              },
+            },
+            {
+              id: 'godel', title: '不完备性', subtitle: 'Gödel',
+              summary: '满足条件的公理体系存在证明能力的边界', accent: '#644A56',
+              details: {
+                first: {
+                  eyebrow: '第三点 · 第一不完备定理',
+                  statement: '一致、有效公理化且足以表达基本算术的系统 $T$，存在内部不可判定命题。',
+                  formula: String.raw`T\nvdash G\quad\text{且}\quad T\nvdash\neg G`,
+                  explanation: '有些命题在这套规则内既不能证明，也不能否定。在更强系统中可能解决，但满足条件的扩展仍然不完备。',
+                  footnote: '采用哥德尔—罗瑟表述；“不可判定”相对于指定系统。',
+                },
+                second: {
+                  eyebrow: '第三点 · 第二不完备定理',
+                  statement: '一致且满足通常条件的算术系统，不能在内部证明自身的一致性。',
+                  formula: String.raw`T\nvdash\operatorname{Con}(T)`,
+                  explanation: '更强理论可能证明较弱理论的一致性，但仍需考察更强理论自身的依据。',
+                  footnote: '系统需有效公理化、足够强，并使用标准的一致性表达与可证明性条件。',
+                },
+                perspective: {
+                  eyebrow: '从形式边界到认识边界',
+                  statement: '认识现实时，形式应当被理解为揭示结构与侧面的工具。',
+                  explanation: '不完备性严格讨论系统内部的可证明性。本文由此反思形式的边界；现实模型是否适用，仍需检查对象、假设与经验。',
+                  footnote: '这是哲学层面的认识态度，不能仅由数学定理推出关于全部物理现实的结论。',
+                },
+              },
+            },
+          ],
+        },
+        {
+          id: 'fallibilism', title: '可谬论', subtitle: 'Fallibilism',
+          summary: '检查证明、前提和应用，保留修正的可能', accent: '#B5855F',
+          details: {
+            synthesis: {
+              eyebrow: '认识形式科学的态度',
+              statement: '保有严格证明，也保有检查与修正自身认识的余地。',
+              explanation: '形式理解有现实来源，未知现实使研究保持开放，体系边界要求认识保持谦逊。',
+              bullets: ['检查证明与前提是否有遗漏', '反思概念与公理的选择', '检验形式应用于现实时是否适切'],
+              footnote: '可谬论不取消给定前提下正确证明的演绎必然性。',
             },
           },
         },
       ],
     },
     {
-      id: 'natural',
-      title: '自然科学',
-      subtitle: 'Natural Sciences',
-      summary: '理论需要具有现实意义，并持续接受经验检验',
-      accent: '#396D80',
+      id: 'natural', title: '自然科学', subtitle: 'Natural Sciences',
+      summary: '理论与模型需要接受经验检验', accent: '#396D80',
       details: {
         paradigm: {
-          eyebrow: '范式 B',
-          statement: '自然科学始终站在现实中，在理论、模型、预测与实验之间循环。',
-          explanation: '它不只问一组规则内部能推出什么，还要问这套结构是否能解释与预测我们所观测的世界。',
+          eyebrow: '自然科学的问法',
+          statement: '理论与模型能否解释和预测我们实际观测到的世界？',
+          explanation: '自然科学不仅考察推理是否成立，还通过可观测后果检验模型的现实意义与适用范围。',
+          footnote: '经验支持提供接受理论的理由，也保留修正它的可能。',
         },
       },
-      children: [
-        {
-          id: 'usefulness',
-          title: '形式与现实',
-          subtitle: '用与无用',
-          summary: '形式体系可能在未知的现实中找到原型',
-          accent: '#9AAE8F',
-          details: {
-            transfer: {
-              eyebrow: '一个体系的价值可以晚于它的诞生',
-              statement: '非欧几何先作为形式体系被研究，后来成为广义相对论描述时空的重要工具。',
-              explanation: '对自然科学，形式体系可以成为候选模型。对形式科学，“有用”只是从当前现实需求出发的一种评价。',
-            },
-          },
-        },
-        {
-          id: 'fallibilism',
-          title: '可谬论',
-          subtitle: 'Fallibilism',
-          summary: '知识宣称始终保留被修正的可能',
-          accent: '#B5855F',
-          details: {
-            synthesis: {
-              eyebrow: '开放的结局',
-              statement: '知识的力量来自它能够被检查、反驳、修改和扩展。',
-              explanation: '数学的发展经历猜想、证明、反例、概念修改与定理推广。自然科学也会在新证据出现时重新评估模型。',
-              footnote: '永远留有下一个问题，并不削弱知识；它使研究保持活力。',
-            },
-          },
-        },
-      ],
     },
   ],
 }
 
-export const scientificCycle: KnowledgeMapData = {
-  id: 'scientific-cycle',
-  title: '现实、理论与两座桥',
-  subtitle: '从现实到理论，再回到现实',
-  layout: 'cycle',
-  root: cycleRoot,
+export const scienceKnowledge: KnowledgeMapData = {
+  id: 'science-knowledge', title: '科学：认识现实',
+  subtitle: '现实、归纳与建模、理论、演绎与实验', layout: 'cycle', root: scienceRoot,
   relations: [
     { id: 'r-reality-induction', source: 'reality', target: 'induction', label: '抽象', type: 'flow' },
     { id: 'r-induction-theory', source: 'induction', target: 'theory', label: '概括', type: 'supports' },
@@ -228,19 +233,16 @@ export const scientificCycle: KnowledgeMapData = {
 }
 
 export const scientificParadigms: KnowledgeMapData = {
-  id: 'scientific-paradigms',
-  title: '形式科学与自然科学',
-  subtitle: '两种问法，一种开放的知识实践',
-  layout: 'tree',
-  root: paradigmRoot,
+  id: 'scientific-paradigms', title: '形式科学与自然科学',
+  subtitle: '形式科学的现实来源与认识边界', layout: 'tree', root: paradigmRoot,
   relations: [
-    { id: 'r-axiom-godel', source: 'axiom', target: 'godel', label: '边界', type: 'limits' },
-    { id: 'r-axiom-usefulness', source: 'axiom', target: 'usefulness', label: '应用', type: 'application' },
-    { id: 'r-godel-fallibilism', source: 'godel', target: 'fallibilism', label: '可修正', type: 'supports' },
+    { id: 'r-axiom-godel', source: 'axiom', target: 'godel', label: '证明边界', type: 'limits' },
+    { id: 'r-prototype-natural', source: 'prototype', target: 'natural', label: '现实原型', type: 'application' },
+    { id: 'r-godel-fallibilism', source: 'godel', target: 'fallibilism', label: '反思边界', type: 'supports' },
   ],
 }
 
 export const knowledgeMaps = {
-  [scientificCycle.id]: scientificCycle,
+  [scienceKnowledge.id]: scienceKnowledge,
   [scientificParadigms.id]: scientificParadigms,
 }

@@ -7,19 +7,21 @@ function treeLayout(map: KnowledgeMapData): LayoutNode[] {
   const placements: Record<string, [number, number, number, number]> = map.id === 'storage'
     ? {
         'memory-root': [800, 190, 360, 116],
-        representation: [400, 380, 290, 110],
-        lifetime: [960, 380, 290, 110],
-        static: [650, 570, 225, 100],
-        automatic: [930, 570, 225, 100],
-        dynamic: [1210, 570, 225, 100],
-        pointer: [1210, 750, 235, 100],
+        representation: [350, 380, 290, 110],
+        array: [200, 570, 225, 100],
+        struct: [470, 570, 225, 100],
+        lifetime: [1050, 380, 290, 110],
+        static: [750, 570, 225, 100],
+        automatic: [1030, 570, 225, 100],
+        dynamic: [1310, 570, 225, 100],
+        pointer: [1310, 750, 235, 100],
       }
     : {
         'ownership-root': [800, 190, 360, 116],
         malloc: [230, 440, 260, 110],
         new: [590, 440, 260, 110],
         risk: [950, 440, 260, 110],
-        raii: [1310, 440, 260, 110],
+        raii: [1310, 440, 260, 148],
         unique: [1125, 680, 245, 100],
         shared: [1450, 680, 245, 100],
       }

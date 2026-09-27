@@ -68,10 +68,11 @@ content/source.md                           原始文章副本
 content-analysis.md                         内容建模、技术修正和覆盖矩阵
 data/knowledge.ts                           三张独立知识图谱
 data/tour.ts                                28 个点击场景
-components/KnowledgeStage.vue               持续知识舞台
+components/KnowledgeStage.vue               持续知识舞台与分支收起
+components/MathText.vue                     LaTeX / KaTeX 公式渲染
 components/ComputabilityComplexityMorph.vue 可计算性到复杂性的语义变形
 components/ComplexityUniversalityMorph.vue  复杂性到通用性的语义变形
-composables/                                D3 布局和镜头 framing
+composables/                                稳定节点布局与镜头拟合
 styles/index.css                            设计 Token 与全局样式
 storyboard.md                               分镜、讲解顺序和视觉审计点
 DESIGN_SYSTEM.md                            视觉与动效规范
@@ -96,3 +97,11 @@ dist/
 - [Slidev 快速开始](https://sli.dev/guide/)
 - [Slidev 构建与部署](https://sli.dev/guide/hosting)
 - [Slidev 导出](https://sli.dev/guide/exporting)
+
+## 讲解顺序
+
+先比较可识别与可判定，再用停机问题展开识别器与对角线证明；复杂度先并列讲 P 与 NP，指数枚举放在 NP 内，再讲 SAT 的缩写、定义和证据，最后引出 P 是否等于 NP。图灵完备部分将条件分支、循环与递归一起讲，阶乘示例已移除。
+
+每个讲解场景只展开当前分支与必要关联；回顾时恢复完整结构。公式以 LaTeX 编写并由 KaTeX 渲染。虚线关系使用直角折点，实线保留原来的平滑曲线。
+
+可直接跳到某个场景，例如 `http://localhost:3030/2?clicks=13` 对应右上角编号 14 的 P 与 NP 比较。

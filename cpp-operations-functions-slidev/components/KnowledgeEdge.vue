@@ -13,13 +13,21 @@ const path = computed(() => {
   }
   const startY = source.y + source.height / 2
   const endY = target.y + target.height / 2
-  const dip = props.edge.type === 'application' ? 145 : 110
-  return `M ${source.x} ${startY} C ${source.x} ${startY + dip}, ${target.x} ${endY + dip}, ${target.x} ${endY}`
+  const lane = Math.max(startY, endY) + (props.edge.type === 'application' ? 160 : 110)
+  if (Math.abs(source.x - target.x) < Math.max(source.width, target.width)) {
+    const left = Math.min(source.x - source.width / 2, target.x - target.width / 2) - 85
+    return `M ${source.x - source.width / 2} ${source.y} H ${left} V ${target.y} H ${target.x - target.width / 2}`
+  }
+  return `M ${source.x} ${startY} V ${lane} H ${target.x} V ${endY}`
 })
-const labelPosition = computed(() => ({
-  x: (props.edge.source.x + props.edge.target.x) / 2,
-  y: Math.max(props.edge.source.y + props.edge.source.height / 2, props.edge.target.y + props.edge.target.height / 2) + (props.edge.type === 'application' ? 112 : 82),
-}))
+const labelPosition = computed(() => {
+  const { source, target } = props.edge
+  if (Math.abs(source.x - target.x) < Math.max(source.width, target.width)) {
+    return { x: Math.min(source.x - source.width / 2, target.x - target.width / 2) - 115, y: (source.y + target.y) / 2 }
+  }
+  return { x: (source.x + target.x) / 2,
+    y: Math.max(source.y + source.height / 2, target.y + target.height / 2) + (props.edge.type === 'application' ? 160 : 110) - 14 }
+})
 </script>
 
 <template>

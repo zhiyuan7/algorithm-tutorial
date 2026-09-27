@@ -22,3 +22,8 @@ pnpm run build
 ```
 
 内容边界、技术性修正与覆盖矩阵见 `content-analysis.md`，逐镜叙事见 `storyboard.md`。
+
+
+本次修订包含 36 个连续镜头。页面编号对应镜头进度；原页码与修改后的对应关系见 `storyboard.md`。所有公式使用 LaTeX / KaTeX 渲染；`output/visual-qa/` 存放本地生成的 PNG 与边界检查报告。
+
+详情页采用分支放大取景：讲解当前分支时暂时收起其他分支，回顾时恢复整图。此次取景修订的 PNG 验收见 `output/branch-visual-qa/`。

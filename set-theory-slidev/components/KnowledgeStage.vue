@@ -30,7 +30,6 @@ const activeMap = computed(() => {
 const layout = computed(() => layouts[activeMap.value.id])
 const nodes = computed(() => layout.value.nodes)
 const edges = computed(() => layout.value.edges)
-const camera = useCamera(scene, nodes)
 
 const visibleNodeIds = computed(() => {
   const requested = scene.value.visibleNodes === 'all'
@@ -46,6 +45,8 @@ const visibleNodeIds = computed(() => {
   }
   return new Set([...requested].filter(id => lineage.has(id)))
 })
+const framedNodes = computed(() => nodes.value.filter(node => visibleNodeIds.value.has(node.id)))
+const camera = useCamera(scene, framedNodes)
 const visibleEdgeIds = computed(() => {
   const requested = scene.value.visibleEdges === 'all'
     ? new Set(edges.value.map(edge => edge.id))
@@ -80,7 +81,7 @@ function isActiveEdge(id: string) {
 
     <svg v-else class="knowledge-world" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <marker id="edge-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <marker id="edge-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
           <path d="M 0 0 L 10 5 L 0 10 z" class="edge-arrow-shape" />
         </marker>
       </defs>

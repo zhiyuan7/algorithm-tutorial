@@ -16,6 +16,7 @@
     "@slidev/cli": "latest",
     "@slidev/theme-default": "latest",
     "d3": "latest",
+    "katex": "0.18.7",
     "vue": "latest"
   },
   "devDependencies": {

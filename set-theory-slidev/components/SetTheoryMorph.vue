@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from 'vue'
+import MathText from './MathText.vue'
 
 const props = defineProps<{ phase: 'foundation-construction' | 'construction-infinity' }>()
 const entered = ref(false)
@@ -15,7 +16,7 @@ onMounted(async () => {
     <template v-if="props.phase === 'foundation-construction'">
       <div class="morph-card source source-a"><strong>外延</strong><small>识别集合</small></div>
       <div class="morph-card source source-b"><strong>分离</strong><small>受控筛选</small></div>
-      <div class="morph-card source source-c"><strong>构造公理</strong><small>生成新集合</small></div>
+      <div class="morph-card source source-c"><strong>集合公理</strong><small>约束集合的存在</small></div>
       <div class="morph-card target target-a"><strong>有序对</strong><small>可验证的编码</small></div>
       <div class="morph-card target target-b"><strong>关系与等价类</strong><small>在既有集合内组织</small></div>
       <div class="morph-card target target-c"><strong>自然数与数系</strong><small>公理工具逐级构造</small></div>
@@ -24,11 +25,11 @@ onMounted(async () => {
 
     <template v-else>
       <div class="morph-card source source-a"><strong>有序对与函数</strong><small>建立对应</small></div>
-      <div class="morph-card source source-b"><strong>ℕ → ℤ → ℚ</strong><small>可枚举对象</small></div>
-      <div class="morph-card source source-c"><strong>ℝ 与幂集</strong><small>完备化与扩张</small></div>
+      <div class="morph-card source source-b"><strong><MathText :text="String.raw`\mathbb N\to\mathbb Z\to\mathbb Q`" latex /></strong><small>可枚举对象</small></div>
+      <div class="morph-card source source-c"><strong><MathText :text="String.raw`$\mathbb R$ 与幂集`" /></strong><small>完备化与扩张</small></div>
       <div class="morph-card target target-a"><strong>双射</strong><small>大小比较工具</small></div>
-      <div class="morph-card target target-b"><strong>可数无限</strong><small>ℵ₀</small></div>
-      <div class="morph-card target target-c"><strong>不可数与更大无限</strong><small>2^ℵ₀ · 𝒫(A)</small></div>
+      <div class="morph-card target target-b"><strong>可数无限</strong><small><MathText :text="String.raw`\aleph_0`" latex /></small></div>
+      <div class="morph-card target target-c"><strong>不可数与更大无限</strong><small><MathText :text="String.raw`2^{\aleph_0}\;\cdot\;\mathcal P(A)`" latex /></small></div>
       <div class="morph-caption">构造对象 → 比较基数</div>
     </template>
 

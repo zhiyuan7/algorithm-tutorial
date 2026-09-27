@@ -11,11 +11,16 @@
     "@slidev/cli": "^52.0.0",
     "@slidev/theme-default": "^0.25.0",
     "d3": "^7.9.0",
-    "vue": "^3.5.0"
+    "vue": "^3.5.0",
+    "katex": "0.16.47",
+    "markdown-it": "14.3.2",
+    "shiki": "4.4.3"
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
     "typescript": "~5.9.3",
-    "vue-tsc": "^3.1.0"
+    "vue-tsc": "^3.1.0",
+    "@types/katex": "^0.16.8",
+    "@types/markdown-it": "^14.2.0"
   }
 }

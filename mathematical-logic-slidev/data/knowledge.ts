@@ -8,15 +8,15 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
   accent: '#13254F',
   details: {
     opening: {
-      eyebrow: '第一张知识图 · 根问题',
-      statement: '写下一个公式时，我们究竟只是在排列符号，还是已经说出了一个真或假的命题？',
-      formula: 'P(a) → Q(a)',
+      eyebrow: '从一个公式说起',
+      statement: '写下一个公式以后，还需要知道什么，才能判断它说了什么、是真是假？',
+      formula: String.raw`P(a)\to Q(a)`,
       explanation: '答案分成两层：语法先判断它是否是合法公式；语义再在某个结构与赋值下判断它表达什么、是否为真。',
     },
     'same-formula': {
       eyebrow: '同一语法，两种解释',
-      statement: '公式的树形结构完全不变，但 P、Q、a 的解释一换，命题内容与真假都可能改变。',
-      formula: '学生(a) → 会编程(a)    |    偶数(4) → 4>10',
+      statement: '公式的结构不变，但 $P$、$Q$、$a$ 的解释一换，它说的事情和真假就可能改变。',
+      formula: String.raw`\begin{gathered}\text{学生}(a)\to\text{会编程}(a)\\\text{偶数}(4)\to(4>10)\end{gathered}`,
       bullets: ['左侧可以谈“小明是否会编程”', '右侧在整数结构中是假命题', '变化发生在解释，不发生在语法'],
     },
   },
@@ -30,9 +30,9 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
       details: {
         truth: {
           eyebrow: '合法性不是真值',
-          statement: '语法只检查表达式是否按规则构造，不负责保证它为真、可满足或能成功运行。',
-          formula: 'grammar 合法  ≠  运行成功    |    公式合法  ≠  公式为真',
-          example: '`x = 1 / 0` 可以通过语言语法检查，却在求值时失败；逻辑公式也可能完全合法却在某个模型中为假。',
+          statement: '语法检查的是表达式写得对不对。公式在某个结构中是否为真，还要看它的解释。',
+          formula: String.raw`\begin{gathered}\text{语法检查通过}\not\Rightarrow\text{求值成功}\\\text{公式合法}\not\Rightarrow\text{公式为真}\end{gathered}`,
+          example: '例如，某些程序中的除零表达式可以通过语法检查，却在求值时出错。逻辑公式也可以写得合法，却在某个结构中为假。',
         },
       },
       children: [
@@ -45,9 +45,9 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
           details: {
             symbols: {
               eyebrow: '语法层 1 · 声明角色',
-              statement: '在语言 L 中，符号先只有“角色”，还没有具体对象或运算的意义。',
-              formula: '0：常元    +：二元函数    <：二元关系',
-              bullets: ['变量：x, y, z, …', '逻辑符号：¬, ∧, ∨, →, ∀, ∃, =', '解释将在语义阶段给出'],
+              statement: '在语言 $L$ 中，我们先约定符号的角色，再通过解释赋予它具体意义。',
+              formula: String.raw`\begin{aligned}0&:\text{常元}\\+&:\text{二元函数符号}\\<&:\text{二元关系符号}\end{aligned}`,
+              bullets: ['变量：$x,y,z,\\ldots$', '逻辑符号：$\\neg,\\land,\\lor,\\to,\\forall,\\exists,=$', '解释将在语义阶段给出'],
             },
           },
         },
@@ -61,8 +61,8 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
             term: {
               eyebrow: '语法层 2 · 指称对象',
               statement: '变量、常元以及把函数符号应用到已有项所得的表达式都是项。',
-              formula: 'x，0，(x+0)+y  是项    |    x<y  不是项',
-              explanation: '`x<y` 不指称一个对象，而是在陈述两个对象之间的小于关系。',
+              formula: String.raw`\begin{gathered}x,\quad 0,\quad(x+0)+y\quad\text{是项}\\x<y\quad\text{不是项}\end{gathered}`,
+              explanation: '$x<y$ 在陈述对象之间的关系，并不是用来指称一个对象的项。',
             },
           },
         },
@@ -76,8 +76,8 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
             construction: {
               eyebrow: '语法层 3 · 形成陈述',
               statement: '关系符号作用于项先形成原子公式；联结词和量词再从已有公式递归生成复杂公式。',
-              formula: 'R(t₁,t₂)  →  ¬φ，(φ∧ψ)，(φ∨ψ)，(φ→ψ)',
-              bullets: ['x<y 是原子公式', 'x+1=y 也是原子公式', '递归规则定义全部良构公式'],
+              formula: String.raw`\begin{gathered}R(t_1,t_2)\quad\text{是原子公式}\\\neg\varphi,\quad(\varphi\land\psi),\\(\varphi\lor\psi),\quad(\varphi\to\psi)\end{gathered}`,
+              bullets: ['$x<y$ 是原子公式', '$x+1=y$ 也是原子公式', '递归规则定义全部良构公式'],
             },
           },
         },
@@ -92,8 +92,8 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
       details: {
         setup: {
           eyebrow: '从形式到意义',
-          statement: '语义不是给公式贴一句自然语言翻译，而是系统地指定论域、符号解释、变量赋值和满足关系。',
-          formula: '结构 𝓜  +  赋值 s  ⟹  𝓜,s ⊨ φ',
+          statement: '要判断公式是否成立，需要先说明有哪些对象、符号怎样解释，以及变量取什么值。',
+          formula: String.raw`\mathcal{M},s\models\varphi`,
         },
       },
       children: [
@@ -107,8 +107,8 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
             model: {
               eyebrow: '严格的一阶结构',
               statement: '结构不只是一个集合：它还必须把语言中的每类非逻辑符号解释到这个论域上。',
-              formula: '|𝓜|=ℤ，0^𝓜=0，+^𝓜=整数加法，<^𝓜=整数小于',
-              footnote: '把“𝓜=ℤ”当作简写可以，但严格说 ℤ 只是结构的论域。',
+              formula: String.raw`\begin{aligned}|\mathcal{M}|&=\mathbb{Z}\\0^{\mathcal{M}}&=0\\+^{\mathcal{M}}&=\text{整数加法}\\<^{\mathcal{M}}&=\text{整数小于关系}\end{aligned}`,
+              footnote: '$\\mathbb{Z}$ 是论域；结构 $\\mathcal{M}$ 还包含符号的解释。',
             },
           },
         },
@@ -121,9 +121,9 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
           details: {
             interpretations: {
               eyebrow: '同一公式，不同模型',
-              statement: '模型解释 P、Q、a，赋值解释自由变量；满足关系再按公式结构递归给出真假。',
-              formula: '𝓜,s ⊨ φ',
-              bullets: ['P 可解释为“是学生”，也可解释为“是偶数”', 'a 可指小明，也可指整数 4', '语法树保持不动，满足结果可以改变'],
+              statement: '结构解释 $P$、$Q$、$a$，赋值确定自由变量的取值，再按公式的结构判断真假。',
+              formula: String.raw`\mathcal{M},s\models\varphi`,
+              bullets: ['$P$ 可解释为“是学生”，也可解释为“是偶数”', '$a$ 可指小明，也可指整数 $4$', '语法树保持不动，满足结果可以改变'],
             },
           },
         },
@@ -138,45 +138,45 @@ const syntaxSemanticsRoot: KnowledgeNodeData = {
       details: {
         soundness: {
           eyebrow: '健全性 · Soundness',
-          statement: '如果存在从 Γ 到 φ 的形式证明，那么 φ 在每个满足 Γ 的模型中都为真。',
-          formula: 'Γ ⊢ φ  ⟹  Γ ⊨ φ',
-          explanation: '证明系统不会把语义上错误的结论认证为定理。',
+          statement: '如果能从前提 $\\Gamma$ 证明 $\\varphi$，那么凡是使前提成立的模型，也都会使结论成立。',
+          formula: String.raw`\Gamma\vdash\varphi\quad\Longrightarrow\quad\Gamma\models\varphi`,
+          explanation: '这保证了：从成立的前提出发，按证明规则得到的结论也成立。',
         },
         completeness: {
           eyebrow: '完备性 · Completeness',
-          statement: '如果 φ 在所有满足 Γ 的模型中都为真，那么经典一阶逻辑能从 Γ 形式地证明 φ。',
-          formula: 'Γ ⊨ φ  ⟹  Γ ⊢ φ',
-          explanation: '两条方向合在一起得到 Γ ⊢ φ ⇔ Γ ⊨ φ。',
+          statement: '在经典一阶逻辑中，如果 $\\varphi$ 在所有满足 $\\Gamma$ 的模型中都成立，就能从 $\\Gamma$ 给出形式证明。',
+          formula: String.raw`\Gamma\models\varphi\quad\Longrightarrow\quad\Gamma\vdash\varphi`,
+          explanation: '两个方向合起来：$\\Gamma\\vdash\\varphi\\iff\\Gamma\\models\\varphi$。',
         },
       },
       children: [
         {
           id: 'proof',
-          title: '可证明性 ⊢',
+          title: '可证明性 $\\vdash$',
           subtitle: 'Syntactic Derivability',
           summary: '按形式规则从前提推到结论',
           accent: '#624F6B',
           details: {
             proof: {
               eyebrow: '句法关系',
-              statement: '`Γ ⊢ φ` 表示存在一条有限形式推导，把 Γ 中的前提按规则变成 φ。',
-              formula: 'Γ ⊢ φ',
-              explanation: '这条关系只检查公式、规则与推导步骤，不需要先知道 P 或 Q 在现实中代表什么。',
+              statement: '$\\Gamma\\vdash\\varphi$ 表示：从 $\\Gamma$ 中的前提出发，可以按规则经过有限步推导得到 $\\varphi$。',
+              formula: String.raw`\Gamma\vdash\varphi`,
+              explanation: '判断证明是否合规，只需检查公式、规则和推导步骤，不必先知道 $P$、$Q$ 具体指什么。',
             },
           },
         },
         {
           id: 'consequence',
-          title: '逻辑后承 ⊨',
+          title: '逻辑后承 $\\models$',
           subtitle: 'Semantic Consequence',
           summary: '所有满足前提的模型也满足结论',
           accent: '#624F6B',
           details: {
             consequence: {
               eyebrow: '语义关系',
-              statement: '`Γ ⊨ φ` 同时考察所有使 Γ 为真的结构与赋值，要求它们也都使 φ 为真。',
-              formula: '对每个 𝓜,s：若 𝓜,s ⊨ Γ，则 𝓜,s ⊨ φ',
-              explanation: '它不是一条具体证明，而是一项跨越所有模型的真值要求。',
+              statement: '$\\Gamma\\models\\varphi$ 表示：无论怎样解释符号、怎样给自由变量赋值，只要前提都成立，结论就成立。',
+              formula: String.raw`\begin{gathered}\forall\mathcal{M},s:\\(\mathcal{M},s\models\Gamma)\Rightarrow(\mathcal{M},s\models\varphi)\end{gathered}`,
+              explanation: '这里看的是所有满足前提的模型，而不是某一条推导过程。',
             },
           },
         },
@@ -193,34 +193,34 @@ const quantifierRoot: KnowledgeNodeData = {
   accent: '#13254F',
   details: {
     'first-order': {
-      eyebrow: '第二张知识图 · 一阶边界',
-      statement: '一阶逻辑的量词直接遍历论域中的对象；若把谓词、集合或关系也作为量化对象，就进入更高阶的框架。',
-      formula: '∀x，∃x：x 在论域 |𝓜| 中取值',
+      eyebrow: '一阶量词能选择什么',
+      statement: '一阶量词选择的是论域中的对象，不直接量化谓词或关系。若要直接量化谓词或关系，就需要更高阶的逻辑框架。',
+      formula: String.raw`\forall x,\ \exists x\quad\text{中的 }x\in|\mathcal{M}|`,
     },
     forall: {
       eyebrow: '全称量词 · 对所有对象',
-      statement: '不管从论域中取哪个对象 a，把 x 的赋值改成 a 后，φ 都必须成立。',
-      formula: '𝓜,s ⊨ ∀x φ  ⇔  对每个 a∈|𝓜|，𝓜,s[x↦a] ⊨ φ',
+      statement: '无论从论域中取哪个对象 $a$，把 $x$ 的值换成 $a$ 后，$\\varphi$ 都要成立。',
+      formula: String.raw`\begin{gathered}\mathcal{M},s\models\forall x\,\varphi\\\iff\forall a\in|\mathcal{M}|:\ \mathcal{M},s[x\mapsto a]\models\varphi\end{gathered}`,
     },
     exists: {
       eyebrow: '存在量词 · 找到一个见证',
-      statement: '只要论域中至少有一个对象 a，使更新 x 的赋值后 φ 成立，存在命题就为真。',
-      formula: '𝓜,s ⊨ ∃x φ  ⇔  存在 a∈|𝓜|，𝓜,s[x↦a] ⊨ φ',
+      statement: '只要能找到一个对象 $a$，使 $x$ 取这个值时 $\\varphi$ 成立，存在命题就成立。',
+      formula: String.raw`\begin{gathered}\mathcal{M},s\models\exists x\,\varphi\\\iff\exists a\in|\mathcal{M}|:\ \mathcal{M},s[x\mapsto a]\models\varphi\end{gathered}`,
     },
   },
   children: [
     {
       id: 'dependent-choice',
       title: '逐个选择',
-      subtitle: '∀x ∃y',
-      summary: '先给 x，再允许为这个 x 选择 y',
+      subtitle: '$\\forall x\\,\\exists y$',
+      summary: '先给定 $x$，再为它选择 $y$',
       accent: '#B5855F',
       details: {
         order: {
           eyebrow: '依赖选择',
-          statement: '对每个 x，都可以单独找一个 y；不同 x 对应的见证可以不同。',
-          formula: '∀x ∃y P(x,y)    即    y 可以依赖 x',
-          example: '在整数的通常小于关系中，给定任意 x，可取 y=x+1。但在有限严格序中，最大元可能让命题失败。',
+          statement: '每给定一个 $x$，都可以重新找一个 $y$。不同的 $x$，可以对应不同的选择。',
+          formula: String.raw`\forall x\,\exists y\,P(x,y)`,
+          example: '例如在整数中，对任意 $x$ 可取 $y=x+1$，使 $x<y$。但有限非空全序中有最大元，同样的命题就不成立。',
         },
       },
       children: [
@@ -228,29 +228,29 @@ const quantifierRoot: KnowledgeNodeData = {
           id: 'pointwise-continuity',
           title: '普通连续',
           subtitle: 'Pointwise Continuity',
-          summary: 'δ 可以随位置 x 与 ε 一起改变',
+          summary: '$\\delta$ 可以随位置 $x$ 和精度 $\\varepsilon$ 改变',
           accent: '#B5855F',
           details: {
             pointwise: {
               eyebrow: '分析中的逐点选择',
-              statement: '先固定位置 x 和精度 ε，再寻找适合这个位置的 δ；换位置时可以重新选择。',
-              formula: '∀x ∀ε>0 ∃δ>0 ∀y：|x−y|<δ ⇒ |f(x)−f(y)|<ε',
-              explanation: '依赖关系是 δ=δ(x,ε)。',
+              statement: '先固定位置 $x$ 和精度 $\\varepsilon$，再找适合它们的 $\\delta$；换一个位置，可以重新选择。',
+              formula: String.raw`\begin{gathered}\forall x\in D\ \forall\varepsilon>0\ \exists\delta>0\ \forall y\in D:\\\lvert x-y\rvert<\delta\Rightarrow\lvert f(x)-f(y)\rvert<\varepsilon\end{gathered}`,
+              explanation: '这里允许 $\\delta=\\delta(x,\\varepsilon)$，所以它可以随位置改变。',
             },
           },
           children: [
             {
               id: 'x2-counterexample',
-              title: 'x² 的反例',
+              title: '$x^2$ 的反例',
               subtitle: 'Continuous, not uniform',
-              summary: '在 R 上连续，但没有全局通用的 δ',
+              summary: '在 $\\mathbb{R}$ 上连续，却没有对所有位置通用的 $\\delta$',
               accent: '#644A56',
               details: {
                 counterexample: {
                   eyebrow: '连续不推出一致连续',
-                  statement: '对任何固定的正 δ，走到足够大的 x 处，横向移动 δ 会造成任意大的函数值变化。',
-                  formula: '|(x+δ)²−x²| = |2xδ+δ²|',
-                  explanation: 'x 增大时斜率 2x 不断增大，所以为了控制同一个 ε，δ 必须随位置越来越小。',
+                  statement: '固定精度 $\\varepsilon=1$。无论选多小的 $\\delta>0$，取 $y=x+\\delta/2$，都能在足够大的 $x$ 处使函数值差超过 $1$。',
+                  formula: String.raw`\left|\left(x+\frac{\delta}{2}\right)^2-x^2\right|=\left|x\delta+\frac{\delta^2}{4}\right|`,
+                  explanation: '这里 $|y-x|=\\delta/2<\\delta$，但函数值差仍可超过固定精度。因此 $f(x)=x^2$ 在 $\\mathbb{R}$ 上不一致连续。',
                 },
               },
             },
@@ -261,21 +261,21 @@ const quantifierRoot: KnowledgeNodeData = {
     {
       id: 'uniform-choice',
       title: '统一选择',
-      subtitle: '∃y ∀x',
-      summary: '先选定一个 y，再让它同时应付所有 x',
+      subtitle: '$\\exists y\\,\\forall x$',
+      summary: '先选定一个 $y$，再让它适用于所有 $x$',
       accent: '#9AAE8F',
       details: {
         order: {
           eyebrow: '统一见证',
-          statement: '存在一个固定 y，使所有 x 都满足 P(x,y)；这个 y 不能在看见 x 后再改变。',
-          formula: '∃y ∀x P(x,y)    即    y 不依赖 x',
-          explanation: '因此它通常比 ∀x∃y P(x,y) 更强。',
+          statement: '先找到一个固定的 $y$，使每个 $x$ 都满足 $P(x,y)$。这个 $y$ 不能随着 $x$ 改变。',
+          formula: String.raw`\exists y\,\forall x\,P(x,y)`,
+          explanation: '所以这比 $\\forall x\\exists y\\,P(x,y)$ 的要求更强。',
         },
         implication: {
           eyebrow: '量词顺序与命题强弱',
-          statement: '一个能应付所有 x 的统一见证，当然也能在逐个问题中反复使用；反过来则未必。',
-          formula: '∃y∀x P(x,y)  ⟹  ∀x∃y P(x,y)',
-          footnote: '箭头不能一般地反向：逐个选择得到的 y 可能随 x 改变。',
+          statement: '如果一个 $y$ 对所有 $x$ 都有效，当然也能逐个使用它。反过来，每次都能找到的 $y$ 未必是同一个。',
+          formula: String.raw`\begin{gathered}\exists y\forall x\,P(x,y)\\\Longrightarrow\quad\forall x\exists y\,P(x,y)\end{gathered}`,
+          footnote: '一般不能反向推出，因为逐个选择的 $y$ 可以依赖 $x$。',
         },
       },
       children: [
@@ -283,14 +283,14 @@ const quantifierRoot: KnowledgeNodeData = {
           id: 'uniform-continuity',
           title: '一致连续',
           subtitle: 'Uniform Continuity',
-          summary: '给定 ε 后，一个 δ 对整个定义域通用',
+          summary: '给定 $\\varepsilon$ 后，同一个 $\\delta$ 对整个定义域有效',
           accent: '#9AAE8F',
           details: {
             uniform: {
               eyebrow: '分析中的统一选择',
-              statement: '先给精度 ε，就要选出一个对定义域里所有位置 x、y 都有效的 δ。',
-              formula: '∀ε>0 ∃δ>0 ∀x,y：|x−y|<δ ⇒ |f(x)−f(y)|<ε',
-              explanation: '依赖关系是 δ=δ(ε)，不能再依赖具体位置 x。',
+              statement: '给定精度 $\\varepsilon$ 后，就要找一个 $\\delta$，让它对定义域中的每一对位置 $x,y$ 都有效。',
+              formula: String.raw`\begin{gathered}\forall\varepsilon>0\ \exists\delta>0\ \forall x,y\in D:\\\lvert x-y\rvert<\delta\Rightarrow\lvert f(x)-f(y)\rvert<\varepsilon\end{gathered}`,
+              explanation: '这里要求 $\\delta=\\delta(\\varepsilon)$，它不能再依赖位置 $x$。',
             },
           },
         },
@@ -309,8 +309,8 @@ export const syntaxSemantics: KnowledgeMapData = {
     { id: 'r-formula-proof', source: 'formula', target: 'proof', label: '按规则推导', type: 'flow' },
     { id: 'r-structure-satisfaction', source: 'structure', target: 'satisfaction', label: '给出解释', type: 'supports' },
     { id: 'r-satisfaction-consequence', source: 'satisfaction', target: 'consequence', label: '遍历模型', type: 'flow' },
-    { id: 'r-proof-correspondence', source: 'proof', target: 'correspondence', label: '健全', type: 'supports' },
-    { id: 'r-consequence-correspondence', source: 'consequence', target: 'correspondence', label: '完备', type: 'supports' },
+    { id: 'r-proof-consequence', source: 'proof', target: 'consequence', label: '健全性', type: 'supports' },
+    { id: 'r-consequence-proof', source: 'consequence', target: 'proof', label: '完备性', type: 'supports' },
   ],
 }
 

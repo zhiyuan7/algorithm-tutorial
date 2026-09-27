@@ -33,34 +33,32 @@ htmlAttrs:
 
 ---
 layout: full
-clicks: 21
+clicks: 19
 class: knowledge-slide
 ---
 
 <KnowledgeStage :step="$clicks" />
 
 <!--
-[click]变量名背后，最终是某段内存中的二进制位。
-[click]数组连续排列；结构体布局还要考虑对齐。
-[click]大小和生存范围已知的对象，不需要每次动态分配。
-[click]作用域回答名字在哪里可见，存储期回答对象存在多久。
-[click]局部 static 名字局部可见，对象却持续到程序结束。
-[click]普通局部对象随作用域退出而销毁。
-[click]运行时规模和跨作用域生命期带来动态存储。
-[click]指针保存地址，但指针本身也有自己的存储期。
-[click]收拢三种存储期。
-[click]拉远看第一张完整图谱。
-[click]问题转向动态资源由谁释放。
-[click]保留自动清理和动态灵活性，转入所有权图谱。
-[click]动态对象不会随着一个普通指针离开作用域而自动消失。
-[click]C 的 malloc/free 只处理原始字节空间。
-[click]C++ 的 new/delete 增加对象构造与析构。
-[click]手动配对在提前返回和异常路径上容易遗漏。
-[click]RAII 把资源责任绑定到管理者对象。
-[click]unique_ptr 用移动表达唯一所有权。
-[click]shared_ptr 以引用计数表达共享所有权。
-[click]两类智能指针汇入所有权模型。
-[click]拉远看完整图谱：默认独占，确实需要时共享。
+[click]常见类型大小因平台而异，用 sizeof 查询实际值。
+[click]数组同类型元素连续排列，下标对应字节偏移。
+[click]结构体成员之间可能有对齐填充。
+[click]先建立三种常见存储期的直觉。
+[click]局部 static 保留上次调用的状态。
+[click]嵌套作用域中，inner 先销毁，outer 继续存在。
+[click]new 在运行时按需要创建并初始化对象。
+[click]回看局部 static：名字的作用域与对象的存储期不同。
+[click]指针变量和它指向的对象分开理解。
+[click]恢复存储整图，把问题转向谁负责释放。
+[click]自动清理与动态灵活性连接到所有权。
+[click]动态对象需要明确的释放责任。
+[click]malloc/free 只处理原始存储。
+[click]new 返回对应类型的指针，负责初始化和构造。
+[click]提前返回与异常可能跳过手写的 delete。
+[click]RAII 在管理对象析构时自动释放资源。
+[click]unique_ptr 用移动转移唯一所有权。
+[click]shared_ptr 在最后一个所有者退出时释放。
+[click]恢复所有权整图，回顾从手动分配到自动管理的关系。
 -->
 
 ---

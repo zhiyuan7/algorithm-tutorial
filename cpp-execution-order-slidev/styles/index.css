@@ -375,9 +375,9 @@ body,
   top: 126px;
   right: 54px;
   width: 482px;
-  max-height: 590px;
+  bottom: 62px;
   box-sizing: border-box;
-  padding: 34px 36px 30px;
+  padding: 22px 26px 24px;
   overflow: hidden;
   border: 1.5px solid rgba(19, 37, 79, .45);
   border-top: 9px solid var(--blue);
@@ -405,46 +405,57 @@ body,
 
 .detail-panel h2 {
   color: var(--ink);
-  font-size: 33px;
+  font-size: 30px;
   line-height: 1.12;
   font-weight: 900;
 }
 
 .detail-statement {
-  margin-top: 20px !important;
+  margin-top: 14px !important;
   color: var(--ink);
-  font-size: 21px;
-  line-height: 1.55;
+  font-size: 20px;
+  line-height: 1.45;
   font-weight: 750;
 }
 
 .detail-formula {
-  margin-top: 22px !important;
-  padding: 14px 16px;
-  white-space: pre-line;
-  overflow-wrap: anywhere;
-  border-left: 5px solid var(--teal);
-  background: rgba(57, 109, 128, .10);
+  margin-top: 16px !important;
+  padding: 12px 14px;
+  border-left: 4px solid var(--teal);
+  background: rgba(57, 109, 128, .08);
   color: var(--blue);
-  font-family: Cambria, "Times New Roman", serif;
-  font-size: 20px;
-  line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: .01em;
+  font-size: 19px;
 }
-
-.detail-code {
-  margin: 18px 0 0;
-  padding: 13px 16px;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  border-left: 5px solid var(--teal);
-  background: rgba(57, 109, 128, .10);
-  color: var(--ink);
-  font-family: Consolas, "Noto Sans Mono CJK SC", monospace;
-  font-size: 17px;
-  line-height: 1.45;
+.detail-formula .katex-display { margin: 0; }
+.detail-formula .katex { font-size: 1.06em; }
+.detail-flow {
+  margin: 16px 0 0;
+  padding: 12px 16px 12px 38px;
+  border-left: 4px solid var(--teal);
+  background: rgba(57, 109, 128, .08);
+  color: var(--blue);
+  font-size: 18px;
+  line-height: 1.6;
 }
+.detail-code { margin-top: 16px; }
+.detail-code pre {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(19, 37, 79, .16);
+  border-radius: 10px;
+  background: #f4f1e9 !important;
+  text-align: left;
+  white-space: pre;
+  tab-size: 4;
+}
+.detail-code pre,
+.detail-code code {
+  font-family: Consolas, "Noto Sans Mono CJK SC", monospace !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+}
+.detail-code code { display: block; background: transparent; padding: 0; }
 
 .detail-explanation,
 .detail-example {
@@ -498,27 +509,28 @@ body,
 .control-morph {
   position: absolute;
   z-index: 10;
-  inset: 120px 82px 70px;
+  inset: 140px 82px 76px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 24px;
+  gap: 12px;
 }
 .morph-column-label {
   position: absolute;
-  top: 0;
+  top: -18px;
   color: var(--brown);
   font-size: 14px;
   font-weight: 800;
   letter-spacing: .1em;
 }
-.morph-column-label.left { left: 6%; }
-.morph-column-label.right { right: 6%; }
+.morph-column-label.left { left: 0; }
+.morph-column-label.right { right: 0; }
 .morph-lane {
   position: relative;
-  height: 148px;
+  flex: 1;
+  min-height: 0;
   display: grid;
-  grid-template-columns: 31% 38% 31%;
+  grid-template-columns: 29% 42% 29%;
   align-items: center;
 }
 .morph-source,
@@ -527,8 +539,8 @@ body,
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: 285px;
-  height: 84px;
+  width: 100%;
+  height: 78px;
   border: 1.5px solid var(--ink);
   border-left: 9px solid var(--morph-accent);
   border-radius: 16px;
@@ -540,16 +552,16 @@ body,
 }
 .morph-source {
   justify-self: start;
-  transition: transform 1200ms var(--ease-cinematic), opacity 500ms ease 600ms;
+  transition: transform 1200ms var(--ease-cinematic);
 }
 .control-morph.entered .morph-source {
-  transform: translateX(375px) scale(.8);
-  opacity: 0;
+  transform: translateX(0);
+  opacity: 1;
 }
 .morph-target {
   justify-self: end;
   opacity: 0;
-  transform: translateX(-210px) scale(.8);
+  transform: translateX(-28px) scale(.94);
   transition: transform 1200ms var(--ease-cinematic), opacity 550ms ease 600ms;
 }
 .control-morph.entered .morph-target {
@@ -559,6 +571,7 @@ body,
 .morph-track {
   position: relative;
   height: 2px;
+  margin: 0 24px;
   background: var(--edge);
   opacity: .65;
 }
@@ -575,9 +588,9 @@ body,
 .control-morph.entered .morph-moving-dot { left: calc(100% - 14px); }
 .morph-meaning {
   position: absolute;
-  left: 31%;
-  right: 31%;
-  bottom: 8px;
+  left: 29%;
+  right: 29%;
+  bottom: 14px;
   color: var(--ink-muted);
   text-align: center;
   font-size: 14px;
@@ -588,7 +601,7 @@ body,
 .control-morph.entered .morph-meaning { opacity: 1; }
 .morph-conclusion {
   position: absolute;
-  bottom: -20px;
+  bottom: -34px;
   left: 0;
   right: 0;
   color: var(--ink);
@@ -600,3 +613,7 @@ body,
   transition: opacity 500ms ease 900ms, transform 600ms var(--ease-cinematic) 900ms;
 }
 .control-morph.entered .morph-conclusion { opacity: 1; transform: translateY(0); }
+
+.morph-arrow { position: absolute; right: -5px; top: -18px; font-size: 26px; color: var(--ink-muted); }
+.knowledge-edge.relation path { stroke-linecap: butt; stroke-linejoin: miter; }
+.knowledge-node foreignObject { overflow: visible; }

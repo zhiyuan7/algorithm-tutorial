@@ -67,6 +67,7 @@ export interface TourScene {
   detailKey?: string
   visibleNodes: string[] | 'all'
   visibleEdges: string[] | 'all'
+  activeEdges?: string[]
   dimNodes?: string[]
   headline?: string
   chapter?: string

@@ -17,10 +17,16 @@ importers:
       d3:
         specifier: latest
         version: 7.9.0
+      katex:
+        specifier: 0.18.7
+        version: 0.18.7
       vue:
         specifier: latest
         version: 3.5.43(typescript@5.9.3)
     devDependencies:
+      playwright-chromium:
+        specifier: 1.63.0
+        version: 1.63.0
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
@@ -5802,10 +5808,8 @@ snapshots:
   playwright-chromium@1.63.0:
     dependencies:
       playwright-core: 1.63.0
-    optional: true
 
-  playwright-core@1.63.0:
-    optional: true
+  playwright-core@1.63.0: {}
 
   points-on-curve@0.2.0: {}
 

@@ -1,66 +1,32 @@
 import { computed, type Ref } from 'vue'
-import type { LayoutNode, TourScene } from '../data/types'
-import { descendantIds } from './useKnowledgeLayout'
+import { edgeGeometry } from './edgeGeometry'
+import type { LayoutEdge, LayoutNode, TourScene } from '../data/types'
 
-const VIEW_WIDTH = 1600
-const VIEW_HEIGHT = 900
-
-function boundsFor(nodes: LayoutNode[]) {
-  const left = Math.min(...nodes.map(node => node.x - node.width / 2))
-  const right = Math.max(...nodes.map(node => node.x + node.width / 2))
-  const top = Math.min(...nodes.map(node => node.y - node.height / 2))
-  const bottom = Math.max(...nodes.map(node => node.y + node.height / 2))
-  return { left, right, top, bottom, width: right - left, height: bottom - top }
-}
-
-export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>) {
+export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>, edges: Ref<LayoutEdge[]>) {
   return computed(() => {
     const current = scene.value
-    const focusNode = nodes.value.find(node => node.id === current.focus) ?? nodes.value[0]
-    let framed = nodes.value
-    if (current.framing === 'node' && focusNode) {
-      const lineage = new Set([focusNode.id])
-      let cursor: LayoutNode | undefined = focusNode
-      while (cursor?.parentId) {
-        lineage.add(cursor.parentId)
-        cursor = nodes.value.find(node => node.id === cursor?.parentId)
-      }
-      framed = nodes.value.filter(node => lineage.has(node.id))
+    const framed = nodes.value
+    if (!framed.length) return { transform: '', scale: 1 }
+    let left = Math.min(...framed.map(node => node.x - node.width / 2)) - 16
+    let right = Math.max(...framed.map(node => node.x + node.width / 2)) + 16
+    let top = Math.min(...framed.map(node => node.y - node.height / 2)) - 16
+    let bottom = Math.max(...framed.map(node => node.y + node.height / 2)) + 16
+    for (const edge of edges.value) {
+      const { bounds } = edgeGeometry(edge)
+      left = Math.min(left, bounds.left - 20)
+      right = Math.max(right, bounds.right + 20)
+      top = Math.min(top, bounds.top - 20)
+      bottom = Math.max(bottom, bounds.bottom + 20)
     }
-    else if (current.framing === 'subtree' && focusNode) {
-      const ids = new Set(descendantIds(nodes.value, focusNode.id))
-      let cursor: LayoutNode | undefined = focusNode
-      while (cursor?.parentId) {
-        ids.add(cursor.parentId)
-        cursor = nodes.value.find(node => node.id === cursor?.parentId)
-      }
-      framed = nodes.value.filter(node => ids.has(node.id))
-    }
-
-    if (current.mode === 'detail') {
-      const visibleIds = current.visibleNodes === 'all'
-        ? new Set(nodes.value.map(node => node.id))
-        : new Set(current.visibleNodes)
-      framed = nodes.value.filter(node => visibleIds.has(node.id))
-    }
-
-    const box = boundsFor(framed)
-    const padding = current.cameraPadding ?? (current.framing === 'all' ? 120 : 180)
-    const detailOffset = current.mode === 'detail' ? -340 : 0
-    const availableWidth = current.mode === 'detail' ? 900 : VIEW_WIDTH - padding * 2
-    const availableHeight = VIEW_HEIGHT - padding * 2
-    const fitScale = Math.min(availableWidth / Math.max(box.width, 1), availableHeight / Math.max(box.height, 1))
-    const scale = current.framing === 'node'
-      ? Math.min(1, Math.max(0.64, fitScale))
-      : current.framing === 'subtree'
-        ? Math.min(0.98, Math.max(0.68, fitScale))
-        : Math.min(0.82, fitScale)
-    const targetX = box.left + box.width / 2
-    const targetY = box.top + box.height / 2
-    const viewX = VIEW_WIDTH / 2 + detailOffset
-    const viewY = VIEW_HEIGHT / 2 + (current.mode === 'detail' ? 38 : 0)
+    const detail = current.mode === 'detail'
+    const availableWidth = detail ? 790 : 1440
+    const availableHeight = detail ? 590 : 650
+    const scale = Math.min(current.framing === 'all' ? 0.92 : 1.05,
+      availableWidth / (right - left), availableHeight / (bottom - top))
+    const viewX = detail ? 445 : 800
+    const viewY = detail ? 495 : 490
     return {
-      transform: `translate(${viewX} ${viewY}) scale(${scale}) translate(${-targetX} ${-targetY})`,
+      transform: `translate(${viewX} ${viewY}) scale(${scale}) translate(${-(left + right) / 2} ${-(top + bottom) / 2})`,
       scale,
     }
   })

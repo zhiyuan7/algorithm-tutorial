@@ -37,28 +37,25 @@ export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>) {
       framed = nodes.value.filter(node => ids.has(node.id))
     }
 
-    if (current.mode === 'detail') {
-      const visibleIds = current.visibleNodes === 'all'
-        ? new Set(nodes.value.map(node => node.id))
-        : new Set(current.visibleNodes)
-      framed = nodes.value.filter(node => visibleIds.has(node.id))
-    }
-
+    if (!framed.length) return { transform: '', scale: 1 }
     const box = boundsFor(framed)
-    const padding = current.cameraPadding ?? (current.framing === 'all' ? 120 : 180)
-    const detailOffset = current.mode === 'detail' ? -260 : 0
-    const availableWidth = current.mode === 'detail' ? 900 : VIEW_WIDTH - padding * 2
-    const availableHeight = VIEW_HEIGHT - padding * 2
+    // Dashed relation routes run in gutters below and beside the visible tree.
+    if (current.framing === 'all') {
+      box.left -= 140
+      box.width = box.right - box.left
+      box.bottom += 180
+      box.height = box.bottom - box.top
+    }
+    const detail = current.mode === 'detail'
+    const padding = current.cameraPadding ?? 100
+    const availableWidth = detail ? 790 : VIEW_WIDTH - padding * 2
+    const availableHeight = detail ? 560 : 610
     const fitScale = Math.min(availableWidth / Math.max(box.width, 1), availableHeight / Math.max(box.height, 1))
-    const scale = current.framing === 'node'
-      ? Math.min(1, Math.max(0.64, fitScale))
-      : current.framing === 'subtree'
-        ? Math.min(0.98, Math.max(0.68, fitScale))
-        : Math.min(0.82, fitScale)
+    const scale = Math.min(current.framing === 'all' ? 0.9 : 1.05, fitScale)
     const targetX = box.left + box.width / 2
     const targetY = box.top + box.height / 2
-    const viewX = VIEW_WIDTH / 2 + detailOffset
-    const viewY = VIEW_HEIGHT / 2 + (current.mode === 'detail' ? 38 : 0)
+    const viewX = detail ? 475 : VIEW_WIDTH / 2
+    const viewY = detail ? 495 : 475
     return {
       transform: `translate(${viewX} ${viewY}) scale(${scale}) translate(${-targetX} ${-targetY})`,
       scale,

@@ -375,7 +375,7 @@ body,
   top: 126px;
   right: 54px;
   width: 482px;
-  max-height: 590px;
+  max-height: calc(100% - 188px);
   box-sizing: border-box;
   padding: 34px 36px 30px;
   overflow: hidden;
@@ -424,11 +424,9 @@ body,
   border-left: 5px solid var(--teal);
   background: rgba(57, 109, 128, .10);
   color: var(--blue);
-  font-family: Cambria, "Times New Roman", serif;
   font-size: 20px;
   line-height: 1.35;
-  font-weight: 700;
-  letter-spacing: .01em;
+  font-weight: 400;
 }
 
 .detail-explanation,
@@ -439,7 +437,7 @@ body,
   line-height: 1.62;
 }
 
-.detail-list {
+.detail-panel .detail-list {
   margin: 18px 0 0;
   padding: 0;
   list-style: none;
@@ -594,4 +592,13 @@ body,
 @media (max-width: 1000px) {
   .detail-panel { right: 34px; width: 440px; }
   .stage-header { left: 40px; right: 36px; }
+}
+
+/* KaTeX supplies the math fonts; prose keeps the presentation font. */
+.math-text .katex {
+  font-size: 1em;
+}
+
+.detail-formula .katex-display {
+  margin: 0;
 }

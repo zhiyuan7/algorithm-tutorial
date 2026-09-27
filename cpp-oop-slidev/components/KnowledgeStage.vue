@@ -2,13 +2,12 @@
 import { computed, toRef } from 'vue'
 import { knowledgeMaps } from '../data/knowledge'
 import { getScene, tour } from '../data/tour'
-import { descendantIds, layoutKnowledgeMap } from '../composables/useKnowledgeLayout'
+import { layoutKnowledgeMap } from '../composables/useKnowledgeLayout'
 import { useCamera } from '../composables/useCamera'
 import KnowledgeNode from './KnowledgeNode.vue'
 import KnowledgeEdge from './KnowledgeEdge.vue'
 import DetailPanel from './DetailPanel.vue'
 import KnowledgeOverview from './KnowledgeOverview.vue'
-import ObjectTypesMorph from './ObjectTypesMorph.vue'
 
 const props = defineProps<{ step: number }>()
 const stepRef = toRef(props, 'step')
@@ -18,26 +17,27 @@ const layouts = Object.fromEntries(
   Object.entries(knowledgeMaps).map(([id, map]) => [id, layoutKnowledgeMap(map)]),
 ) as Record<keyof typeof knowledgeMaps, ReturnType<typeof layoutKnowledgeMap>>
 
-const activeMap = computed(() => scene.value.map === 'morph' ? knowledgeMaps.types : knowledgeMaps[scene.value.map])
+const activeMap = computed(() => knowledgeMaps[scene.value.map])
 const layout = computed(() => layouts[activeMap.value.id])
 const nodes = computed(() => layout.value.nodes)
 const edges = computed(() => layout.value.edges)
-const camera = useCamera(scene, nodes)
 
 const visibleNodeIds = computed(() => {
-  const seen = scene.value.visibleNodes === 'all'
+  const requested = scene.value.visibleNodes === 'all'
     ? new Set(nodes.value.map(node => node.id))
     : new Set(scene.value.visibleNodes)
-  if (scene.value.mode !== 'detail' && scene.value.framing !== 'subtree') return seen
-  const focus = nodes.value.find(node => node.id === scene.value.focus)
-  if (!focus || focus.depth === 0) return seen
-  let branch = focus
-  while (branch.parentId && nodes.value.find(node => node.id === branch.parentId)?.depth !== 0)
-    branch = nodes.value.find(node => node.id === branch.parentId)!
-  const branchIds = new Set(descendantIds(nodes.value, branch.id))
-  branchIds.add(nodes.value[0].id)
-  return new Set([...branchIds].filter(id => seen.has(id)))
+  if (scene.value.mode !== 'detail' || scene.value.framing !== 'node') return requested
+  const lineage = new Set<string>()
+  let cursor = nodes.value.find(node => node.id === scene.value.focus)
+  while (cursor) {
+    lineage.add(cursor.id)
+    cursor = cursor.parentId ? nodes.value.find(node => node.id === cursor?.parentId) : undefined
+  }
+  return new Set([...requested].filter(id => lineage.has(id)))
 })
+const framedNodes = computed(() => nodes.value.filter(node => visibleNodeIds.value.has(node.id)))
+const camera = useCamera(scene, framedNodes)
+
 const visibleEdgeIds = computed(() => {
   const selected = scene.value.visibleEdges === 'all'
     ? new Set(edges.value.map(edge => edge.id))
@@ -68,11 +68,9 @@ function isActiveEdge(id: string) {
       :total="tour.length"
     />
 
-    <ObjectTypesMorph v-if="scene.map === 'morph'" :key="scene.id" />
-
-    <svg v-else class="knowledge-world" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
+    <svg class="knowledge-world" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <marker id="edge-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <marker id="edge-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
           <path d="M 0 0 L 10 5 L 0 10 z" class="edge-arrow-shape" />
         </marker>
       </defs>
@@ -81,6 +79,7 @@ function isActiveEdge(id: string) {
           v-for="edge in edges"
           :key="edge.id"
           :edge="edge"
+          :nodes="nodes"
           :visible="visibleEdgeIds.has(edge.id)"
           :active="isActiveEdge(edge.id)"
           :map-layout="activeMap.layout"

@@ -6,9 +6,9 @@
 
 ## 图谱边界
 
-- **图谱 A：一个对象如何保持合法**。关系是“建立／维护／释放／隐藏实现”，收纳构造、初始化、析构、RAII、默认特殊成员、封装、不变量和接口稳定性。
-- **图谱 B：多个类型如何协作**。关系是“类型归属／接口契约／动态分派／创建与销毁”，收纳继承、组合、复用、三类成员函数、多态、工厂与虚析构。
-- 过渡镜头将 A 中的 `encapsulation → contract`、`lifetime → virtual-dtor`、`object-root → dispatch` 显式对应。它讲的是设计关注点如何从单个对象扩展到对象家族；两图数据独立，过渡不是合并图谱。
+- **图谱 A：一个对象如何保持合法**。关系是“建立／维护／释放／隐藏实现”，收纳构造、初始化、析构、RAII、默认特殊成员、封装的过程复用与接口控制。
+- **图谱 B：多个类型如何协作**。关系是“类型归属／接口契约／动态分派／创建与销毁”，将组合并入继承的关系比较，函数声明归到继承下；动态分派下讲虚函数表、工厂与虚析构。
+- 两组数据独立；按修改要求删除原第 13、14 步的转换与变形，直接进入类型协作。
 
 ## 从原文到场景的覆盖矩阵
 
@@ -21,13 +21,13 @@
 | 3. 构造／析构与 RAII（175–234） | 对象离开作用域自动清理资源 | A / `lifetime` | 两个 Detail | `Buffer` 与标准库资源管理例子 |
 | 4. default／delete（235–296） | 编译器默认函数与明确禁止操作 | A / `defaults` | Detail | 提及未初始化的标量成员 |
 | 二、封装（297–346） | 不允许外部任意改状态 | A / `encapsulation` | Detail | 银行账户反例 |
-| 1. private／public（347–446） | 接口保护不变量并隔离实现 | A / `invariant`, `stable-interface` | 两个 Detail | `balance ≥ 0`、存储单位变更、简单 struct 例外 |
+| 1. private／public（347–446） | 接口保护不变量并隔离实现 | A / `process-reuse`, `stable-interface` | 两个 Detail | `balance ≥ 0`、存储单位变更、简单 struct 例外 |
 | 2. 封装的真正含义（447–504） | 对象自己维持合法状态 | A / `encapsulation` | Detail + 总览讲述 | 温度不能低于绝对零度 |
 | 三、继承（505–548） | 真实的类型关系比复用代码重要 | B / `inheritance` | Detail | 机器人类型族 |
-| 1. is-a／has-a（549–632） | 公有继承与组合的区分 | B / `inheritance`, `composition` | 两个 Detail | `InfantryRobot is-a Robot`，`Robot has-a Battery` |
+| 1. is-a／has-a（549–632） | 公有继承与组合的区分 | B / `inheritance` | 同页对比 | `InfantryRobot is-a Robot`，`Robot has-a Battery` |
 | 2. 派生类能力（633–665） | 继承、扩展、按契约重写 | B / `reuse` | Detail | `move`、`shoot`，基类 private 边界 |
 | 四、多态引入（666–702） | 同一接口对不同对象做不同事 | B / `dispatch` | 概念与讲述 | `attack` 贯穿后续 |
-| 1. 非虚／虚／纯虚（703–779） | 三种接口与实现契约 | B / `contract` | 三个 Detail | `id`、`move`、`attack`，`override` 检查 |
+| 1. 非虚／虚／纯虚（703–779） | 三种函数声明形式 | B / `contract` | 继承下三个 Detail | `id`、`move`、`attack`，`override` 检查 |
 | 2. 多态（780–826） | 基类引用或指针触发动态分派 | B / `dispatch` | Detail + 调用例子 | `executeAttack(Robot&)` |
 | 3. 接口类与工厂（827–857） | 隐藏具体创建，返回 `unique_ptr<Robot>` | B / `factory` | Detail | 简单工厂与抽象工厂边界 |
 | 4. 虚析构与顺序（858–948） | 基类指针销毁时完整析构 | B / `virtual-dtor` | 两个 Detail | 派生→基类析构；与构造顺序相反 |
@@ -43,3 +43,13 @@
 ## 设计与取舍
 
 每个节点只保留短标题；解释、代码片段的关键行和注意事项进入详情面板或讲稿。原文长篇完整代码不逐字上屏，原文副本保存在 `content/source.md` 供追溯。图中实线为层级，虚线为跨分支设计联系；颜色只辅助类别识别。
+
+
+## 本次内容调整与核对
+
+- 构造页区分“隐式声明默认构造”和“用户声明构造后不再自动提供”；不使用容易误解的覆盖说法。补充成员原因可能导致默认构造被删除，以及数值成员不一定归零。参照 [C++ 草案 class.default.ctor](https://eel.is/c++draft/class.default.ctor)。
+- 初始化列表新增效率优势：避免类成员先默认构造再赋值的额外步骤；不承诺每个场景都会更快。
+- 封装改为复用过程、控制接口两个选用原因。不变量作为取款流程中的例子保留。
+- 组合并入继承的关系比较，函数契约下沉到继承；只介绍声明与 override 写法，机制后移。
+- 动态分派新增 vptr/vtable 布局与调用两个状态。展示单继承的常见实现模型，说明表通常由同类对象共享、可能存在多个表或指针，以及去虚化优化；不把它写成 C++ 标准强制布局。参照 [Itanium C++ ABI 2.5](https://itanium-cxx-abi.github.io/cxx-abi/abi.html#vtable)。
+- 删除原进度第 13、14 步；移除变形组件。代码统一来自标准 Markdown 围栏，公式独立使用 LaTeX。原始文章及其副本保持不变。

@@ -3,6 +3,9 @@ export type MapId = 'existence-boundary' | 'construction-ladder' | 'infinity-lad
 export type MorphId = 'morph-foundation-construction' | 'morph-construction-infinity'
 
 export interface KnowledgeDetail {
+  title?: string
+  quote?: string
+  source?: { label: string; url: string }
   eyebrow?: string
   statement: string
   explanation?: string

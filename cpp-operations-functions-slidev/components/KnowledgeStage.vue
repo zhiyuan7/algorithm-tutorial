@@ -22,14 +22,30 @@ const activeMap = computed(() => scene.value.map === 'morph' ? knowledgeMaps['ju
 const layout = computed(() => layouts[activeMap.value.id])
 const nodes = computed(() => layout.value.nodes)
 const edges = computed(() => layout.value.edges)
-const camera = useCamera(scene, nodes)
 
-const visibleNodeIds = computed(() => scene.value.visibleNodes === 'all'
-  ? new Set(nodes.value.map(node => node.id))
-  : new Set(scene.value.visibleNodes))
-const visibleEdgeIds = computed(() => scene.value.visibleEdges === 'all'
-  ? new Set(edges.value.map(edge => edge.id))
-  : new Set(scene.value.visibleEdges))
+const visibleNodeIds = computed(() => {
+  const requested = scene.value.visibleNodes === 'all'
+    ? new Set(nodes.value.map(node => node.id))
+    : new Set(scene.value.visibleNodes)
+  if (scene.value.mode !== 'detail') return requested
+  const lineage = new Set<string>()
+  let cursor = nodes.value.find(node => node.id === scene.value.focus)
+  while (cursor) {
+    lineage.add(cursor.id)
+    cursor = nodes.value.find(node => node.id === cursor?.parentId)
+  }
+  return lineage
+})
+const framedNodes = computed(() => nodes.value.filter(node => visibleNodeIds.value.has(node.id)))
+const camera = useCamera(scene, framedNodes)
+const visibleEdgeIds = computed(() => {
+  const requested = scene.value.visibleEdges === 'all'
+    ? new Set(edges.value.map(edge => edge.id))
+    : new Set(scene.value.visibleEdges)
+  return new Set(edges.value.filter(edge => requested.has(edge.id)
+    && visibleNodeIds.value.has(edge.source.id)
+    && visibleNodeIds.value.has(edge.target.id)).map(edge => edge.id))
+})
 const dimNodeIds = computed(() => new Set(scene.value.dimNodes ?? []))
 const activeNode = computed(() => nodes.value.find(node => node.id === scene.value.focus))
 const activeDetail = computed(() => {
@@ -56,7 +72,7 @@ function isActiveEdge(id: string) {
 
     <svg v-else class="knowledge-world" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <marker id="edge-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <marker id="edge-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
           <path d="M 0 0 L 10 5 L 0 10 z" class="edge-arrow-shape" />
         </marker>
       </defs>

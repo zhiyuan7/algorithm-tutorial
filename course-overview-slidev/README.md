@@ -4,17 +4,24 @@
 
 动态 Slidev Web Presentation 是主产品。PPTX 是按 click scene 导出的关键帧备用版。
 
+## 内容主线
+
+从本体论与认识论引出科学，讲述现实、归纳与建模、理论、演绎与实验。随后区分形式科学与自然科学，从认识的现实起点、现实的广阔性与公理体系的边界三方面讨论形式科学的唯物性，最后以可谬论收束。
+
+文章与 `content/source.md` 保持同步。舞台页码见 `storyboard.md`；封面与结尾不计入知识场景页码。
+
 ## 当前交付物
 
 - `slides.md`：封面、持续 KnowledgeStage 和结尾。
 - `content/source.md`：原始文章。
 - `content-analysis.md`：文章结构、关系、公式与准确性调整。
 - `data/knowledge.ts`：两张独立知识图谱。
-- `data/tour.ts`：25 个点击场景的演示状态机。
+- `data/tour.ts`：23 个场景（22 次点击）的演示状态机。
 - `storyboard.md`：分镜、镜头、语义动画与源文映射。
 - `components/KnowledgeStage.vue`：核心舞台。
+- `components/MathText.vue`：共享的 LaTeX / KaTeX 数学渲染（包括行内变量）。
 - `components/ParadigmMorph.vue`：两张图谱之间的变形过渡。
-- `composables/useKnowledgeLayout.ts`：D3 hierarchy 布局与循环布局。
+- `composables/useKnowledgeLayout.ts`：D3 hierarchy 布局与关系布局。
 - `composables/useCamera.ts`：`node / subtree / all` 镜头 framing。
 - `DESIGN_SYSTEM.md`：配色、字体、节点、镜头和动画 Token。
 - `demo.md`：最小 Demo。

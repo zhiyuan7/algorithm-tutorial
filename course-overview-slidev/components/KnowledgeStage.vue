@@ -65,6 +65,7 @@ function isActiveEdge(id: string) {
           v-for="edge in edges"
           :key="edge.id"
           :edge="edge"
+          :nodes="nodes"
           :visible="visibleEdgeIds.has(edge.id)"
           :active="isActiveEdge(edge.id)"
           :map-layout="activeMap.layout"

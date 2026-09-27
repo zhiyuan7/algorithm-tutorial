@@ -11,10 +11,12 @@
     "@slidev/cli": "latest",
     "@slidev/theme-default": "latest",
     "d3": "latest",
+    "katex": "0.18.7",
     "vue": "latest"
   },
   "devDependencies": {
     "@types/d3": "latest",
+    "playwright-chromium": "^1.63.0",
     "typescript": "~5.9.3",
     "vue-tsc": "latest"
   }

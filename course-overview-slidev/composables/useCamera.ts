@@ -50,13 +50,8 @@ export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>) {
     const availableWidth = current.mode === 'detail' ? 900 : VIEW_WIDTH - padding * 2
     const availableHeight = VIEW_HEIGHT - padding * 2
     const fitScale = Math.min(availableWidth / Math.max(box.width, 1), availableHeight / Math.max(box.height, 1))
-    const scale = current.framing === 'node'
-      ? Math.min(1, Math.max(0.64, fitScale))
-      : current.framing === 'subtree'
-        ? Math.min(0.98, Math.max(0.74, fitScale))
-        : current.map === 'scientific-paradigms'
-          ? Math.min(0.82, Math.max(0.66, fitScale))
-          : Math.min(0.95, Math.max(0.68, fitScale))
+    const maximumScale = current.framing === 'node' ? 1 : current.framing === 'subtree' ? 0.98 : 0.82
+    const scale = Math.min(maximumScale, fitScale)
     const targetX = box.left + box.width / 2
     const targetY = box.top + box.height / 2
     const viewX = VIEW_WIDTH / 2 + detailOffset

@@ -946,3 +946,15 @@ Robot destroyed
 \text{再析构基类}
 }
 \]
+
+## 延伸阅读
+
+- [《C++ Primer Plus》第六版](https://www.informit.com/store/c-plus-plus-primer-plus-9780321776402)：一部覆盖语言基础与常见实践的经典 C++ 入门教程。
+- [Scott Meyers《Effective C++》](https://www.informit.com/store/effective-c-9780321334879)：通过具体条款学习 C++ 的常见设计与使用原则。
+- [Scott Meyers《Effective Modern C++》](https://www.aristeia.com/books.html)：聚焦 C++11/14 的现代语言特性与实践取舍。
+
+### 还未覆盖的专题
+
+- [引用](https://en.cppreference.com/w/cpp/language/reference)：理解左值引用、右值引用及其在函数参数和对象生命周期中的作用。
+- [模板](https://en.cppreference.com/w/cpp/language/templates)：涵盖函数模板、类模板以及模板实例化机制。
+- [auto 类型推导](https://en.cppreference.com/w/cpp/language/auto)与 [Concepts / constraints](https://en.cppreference.com/w/cpp/language/constraints)：可作为学习现代 C++ 类型推导与泛型约束的参考。

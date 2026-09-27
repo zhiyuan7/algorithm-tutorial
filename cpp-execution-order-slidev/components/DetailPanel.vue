@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MathText from './MathText.vue'
+import CodeBlock from './CodeBlock.vue'
 import type { KnowledgeDetail, KnowledgeNodeData } from '../data/types'
 
 defineProps<{
@@ -14,8 +16,11 @@ defineProps<{
       <p v-if="detail.eyebrow" class="detail-eyebrow">{{ detail.eyebrow }}</p>
       <h2>{{ node.title }}</h2>
       <p class="detail-statement">{{ detail.statement }}</p>
-      <p v-if="detail.formula" class="detail-formula">{{ detail.formula }}</p>
-      <pre v-if="detail.code" class="detail-code">{{ detail.code }}</pre>
+      <div v-if="detail.formula" class="detail-formula"><MathText :text="detail.formula" latex display /></div>
+      <ol v-if="detail.flow" class="detail-flow">
+        <li v-for="line in detail.flow" :key="line">{{ line }}</li>
+      </ol>
+      <CodeBlock v-if="detail.codeExample" :name="detail.codeExample" />
       <p v-if="detail.explanation" class="detail-explanation">{{ detail.explanation }}</p>
       <ul v-if="detail.bullets?.length" class="detail-list">
         <li v-for="item in detail.bullets" :key="item">{{ item }}</li>

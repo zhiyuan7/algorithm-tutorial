@@ -2,6 +2,10 @@ export type SemanticMode = 'overview' | 'concept' | 'summary' | 'detail'
 export type MapId = 'storage' | 'ownership'
 
 export interface KnowledgeDetail {
+  title?: string
+  code?: string
+  diagram?: 'array' | 'struct' | 'scope'
+  table?: { headers: string[]; rows: string[][] }
   eyebrow?: string
   statement: string
   explanation?: string

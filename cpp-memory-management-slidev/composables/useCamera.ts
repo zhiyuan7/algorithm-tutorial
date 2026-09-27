@@ -1,6 +1,5 @@
 import { computed, type Ref } from 'vue'
 import type { LayoutNode, TourScene } from '../data/types'
-import { descendantIds } from './useKnowledgeLayout'
 
 const VIEW_WIDTH = 1600
 const VIEW_HEIGHT = 900
@@ -16,42 +15,23 @@ function boundsFor(nodes: LayoutNode[]) {
 export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>) {
   return computed(() => {
     const current = scene.value
-    const focusNode = nodes.value.find(node => node.id === current.focus) ?? nodes.value[0]
-    let framed = nodes.value
-    if (current.framing === 'node' && focusNode) {
-      const lineage = new Set([focusNode.id])
-      let cursor: LayoutNode | undefined = focusNode
-      while (cursor?.parentId) {
-        lineage.add(cursor.parentId)
-        cursor = nodes.value.find(node => node.id === cursor?.parentId)
-      }
-      framed = nodes.value.filter(node => lineage.has(node.id))
+    if (!nodes.value.length) return { transform: '', scale: 1 }
+    // Visibility is decided by the scene; fit its remaining branch and context together.
+    const box = boundsFor(nodes.value)
+    if (current.framing === 'all') {
+      box.bottom += 130 // Reserve room for the orthogonal relation lanes and labels.
+      box.height += 130
     }
-    else if (current.framing === 'subtree' && focusNode) {
-      const ids = new Set(descendantIds(nodes.value, focusNode.id))
-      let cursor: LayoutNode | undefined = focusNode
-      while (cursor?.parentId) {
-        ids.add(cursor.parentId)
-        cursor = nodes.value.find(node => node.id === cursor?.parentId)
-      }
-      framed = nodes.value.filter(node => ids.has(node.id))
-    }
-
-    const box = boundsFor(framed)
-    const padding = current.cameraPadding ?? (current.framing === 'all' ? 120 : 180)
-    const detailOffset = current.mode === 'detail' ? -320 : 0
-    const availableWidth = current.mode === 'detail' ? 900 : VIEW_WIDTH - padding * 2
-    const availableHeight = VIEW_HEIGHT - padding * 2
-    const fitScale = Math.min(availableWidth / Math.max(box.width, 1), availableHeight / Math.max(box.height, 1))
-    const scale = current.framing === 'node'
-      ? Math.min(1, Math.max(0.64, fitScale))
-      : current.framing === 'subtree'
-        ? Math.min(0.98, Math.max(0.74, fitScale))
-        : Math.min(0.85, fitScale)
+    const detail = current.mode === 'detail'
+    const padding = current.cameraPadding ?? 100
+    const availableWidth = detail ? 770 : VIEW_WIDTH - padding * 2
+    const availableHeight = detail ? 540 : 610
+    const fitScale = Math.min(availableWidth / box.width, availableHeight / box.height)
+    const scale = Math.min(current.framing === 'all' ? 0.9 : 1.1, fitScale)
     const targetX = box.left + box.width / 2
     const targetY = box.top + box.height / 2
-    const viewX = VIEW_WIDTH / 2 + detailOffset
-    const viewY = VIEW_HEIGHT / 2 + (current.mode === 'detail' ? 38 : 0)
+    const viewX = detail ? 440 : VIEW_WIDTH / 2
+    const viewY = detail ? 495 : 485
     return {
       transform: `translate(${viewX} ${viewY}) scale(${scale}) translate(${-targetX} ${-targetY})`,
       scale,

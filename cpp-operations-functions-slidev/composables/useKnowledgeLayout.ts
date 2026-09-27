@@ -4,14 +4,14 @@ import type { KnowledgeMapData, KnowledgeNodeData, LayoutEdge, LayoutNode } from
 export function layoutKnowledgeMap(map: KnowledgeMapData) {
   const root = hierarchy(map.root)
   const leaves = root.leaves()
-  const leafX = new Map(leaves.map((item, index) => [item.data.id, 220 + index * 230]))
+  const leafX = new Map(leaves.map((item, index) => [item.data.id, 220 + index * 260]))
   function xFor(item: typeof root): number {
     if (!item.children?.length) return leafX.get(item.data.id)!
     return item.children.reduce((sum, child) => sum + xFor(child), 0) / item.children.length
   }
   const nodes: LayoutNode[] = root.descendants().map(item => ({
-    id: item.data.id, data: item.data, x: xFor(item), y: 170 + item.depth * 325,
-    width: item.depth === 0 ? 320 : item.depth === 1 ? 250 : 205,
+    id: item.data.id, data: item.data, x: xFor(item), y: 170 + item.depth * 235,
+    width: item.depth === 0 ? 320 : item.depth === 1 ? 270 : 240,
     height: item.depth === 0 ? 112 : item.depth === 1 ? 105 : 94,
     depth: item.depth, parentId: item.parent?.data.id,
   }))

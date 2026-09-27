@@ -1,67 +1,37 @@
 import { computed, type Ref } from 'vue'
-import type { LayoutNode, TourScene } from '../data/types'
-import { descendantIds } from './useKnowledgeLayout'
+import type { LayoutEdge, LayoutNode, TourScene } from '../data/types'
+import { edgeGeometry } from './edgeGeometry'
 
-const VIEW_WIDTH = 1600
-const VIEW_HEIGHT = 900
-
-function boundsFor(nodes: LayoutNode[]) {
-  if (!nodes.length) return { left: 0, right: VIEW_WIDTH, top: 0, bottom: VIEW_HEIGHT, width: VIEW_WIDTH, height: VIEW_HEIGHT }
-  const left = Math.min(...nodes.map(node => node.x - node.width / 2))
-  const right = Math.max(...nodes.map(node => node.x + node.width / 2))
-  const top = Math.min(...nodes.map(node => node.y - node.height / 2))
-  const bottom = Math.max(...nodes.map(node => node.y + node.height / 2))
-  return { left, right, top, bottom, width: right - left, height: bottom - top }
-}
-
-function lineage(nodes: LayoutNode[], start?: LayoutNode) {
-  const ids = new Set<string>()
-  let cursor = start
-  while (cursor) {
-    ids.add(cursor.id)
-    cursor = cursor.parentId ? nodes.find(node => node.id === cursor?.parentId) : undefined
-  }
-  return ids
-}
-
-export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>) {
+export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>, edges: Ref<LayoutEdge[]>) {
   return computed(() => {
-    const current = scene.value
-    const focusNode = nodes.value.find(node => node.id === current.focus) ?? nodes.value[0]
-    let framed = nodes.value
-
-    if (current.framing === 'node' && focusNode) {
-      const ids = lineage(nodes.value, focusNode)
-      nodes.value.filter(node => node.parentId === focusNode.id).forEach(node => ids.add(node.id))
-      framed = nodes.value.filter(node => ids.has(node.id))
+    const framed = nodes.value
+    if (!framed.length) return { transform: '', scale: 1 }
+    const xs = framed.flatMap(node => [node.x - node.width / 2, node.x + node.width / 2])
+    const ys = framed.flatMap(node => [node.y - node.height / 2, node.y + node.height / 2])
+    for (const edge of edges.value) {
+      const geometry = edgeGeometry(edge)
+      const coordinates = geometry.path.match(/-?\d+(?:\.\d+)?/g)!.map(Number)
+      coordinates.forEach((value, index) => (index % 2 === 0 ? xs : ys).push(value))
+      if (edge.label) {
+        xs.push(geometry.x - 145, geometry.x + 145)
+        ys.push(geometry.y - 15, geometry.y + 17)
+      }
     }
-    else if (current.framing === 'subtree' && focusNode) {
-      const ids = new Set(descendantIds(nodes.value, focusNode.id))
-      lineage(nodes.value, focusNode).forEach(id => ids.add(id))
-      framed = nodes.value.filter(node => ids.has(node.id))
-    }
-
-    const visibleIds = current.visibleNodes === 'all' ? undefined : new Set(current.visibleNodes)
-    framed = framed.filter(node => !visibleIds || visibleIds.has(node.id))
-    if (!framed.length && focusNode) framed = [focusNode]
-
-    const box = boundsFor(framed)
-    const padding = current.cameraPadding ?? (current.framing === 'all' ? 110 : 150)
-    const detail = current.mode === 'detail'
-    const availableWidth = detail ? 850 : VIEW_WIDTH - padding * 2
-    const availableHeight = VIEW_HEIGHT - padding * 2
-    const fitScale = Math.min(availableWidth / Math.max(box.width, 1), availableHeight / Math.max(box.height, 1))
-    const scale = current.framing === 'all'
-      ? Math.min(0.9, Math.max(0.63, fitScale))
-      : current.framing === 'subtree'
-        ? Math.min(0.96, Math.max(0.69, fitScale))
-        : Math.min(1.04, Math.max(0.72, fitScale))
-    const targetX = box.left + box.width / 2
-    const targetY = box.top + box.height / 2
-    const viewX = detail ? 535 : VIEW_WIDTH / 2
-    const viewY = VIEW_HEIGHT / 2 + (detail ? 42 : 34)
+    const left = Math.min(...xs) - 24
+    const right = Math.max(...xs) + 24
+    const top = Math.min(...ys) - 24
+    const bottom = Math.max(...ys) + 24
+    const detail = scene.value.mode === 'detail'
+    // SVG coordinates: the right panel starts at x=930; the heading ends at y=130.
+    // Never clamp the fit scale upwards: a tall branch must fit inside this safe area.
+    const width = detail ? 790 : 1400
+    const height = detail ? 550 : 640
+    const scale = Math.min(scene.value.framing === 'all' ? 0.88 : 1.12,
+      width / (right - left), height / (bottom - top))
+    const centerX = detail ? 475 : 800
+    const centerY = detail ? 485 : 485
     return {
-      transform: `translate(${viewX} ${viewY}) scale(${scale}) translate(${-targetX} ${-targetY})`,
+      transform: `translate(${centerX} ${centerY}) scale(${scale}) translate(${-(left + right) / 2} ${-(top + bottom) / 2})`,
       scale,
     }
   })

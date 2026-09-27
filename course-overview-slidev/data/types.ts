@@ -1,5 +1,5 @@
 export type SemanticMode = 'overview' | 'concept' | 'summary' | 'detail'
-export type MapId = 'scientific-cycle' | 'scientific-paradigms'
+export type MapId = 'science-knowledge' | 'scientific-paradigms'
 
 export interface KnowledgeDetail {
   eyebrow?: string

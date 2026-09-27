@@ -1,9 +1,7 @@
 import { computed, type Ref } from 'vue'
 import type { LayoutNode, TourScene } from '../data/types'
-import { descendantIds } from './useKnowledgeLayout'
 
 const VIEW_WIDTH = 1600
-const VIEW_HEIGHT = 900
 
 function boundsFor(nodes: LayoutNode[]) {
   const left = Math.min(...nodes.map(node => node.x - node.width / 2))
@@ -16,49 +14,25 @@ function boundsFor(nodes: LayoutNode[]) {
 export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>) {
   return computed(() => {
     const current = scene.value
-    const focusNode = nodes.value.find(node => node.id === current.focus) ?? nodes.value[0]
-    let framed = nodes.value
-    if (current.framing === 'node' && focusNode) {
-      const lineage = new Set([focusNode.id])
-      let cursor: LayoutNode | undefined = focusNode
-      while (cursor?.parentId) {
-        lineage.add(cursor.parentId)
-        cursor = nodes.value.find(node => node.id === cursor?.parentId)
-      }
-      framed = nodes.value.filter(node => lineage.has(node.id))
-    }
-    else if (current.framing === 'subtree' && focusNode) {
-      const ids = new Set(descendantIds(nodes.value, focusNode.id))
-      let cursor: LayoutNode | undefined = focusNode
-      while (cursor?.parentId) {
-        ids.add(cursor.parentId)
-        cursor = nodes.value.find(node => node.id === cursor?.parentId)
-      }
-      framed = nodes.value.filter(node => ids.has(node.id))
-    }
-
-    if (current.mode === 'detail') {
-      const visibleIds = current.visibleNodes === 'all'
-        ? new Set(nodes.value.map(node => node.id))
-        : new Set(current.visibleNodes)
-      framed = nodes.value.filter(node => visibleIds.has(node.id))
-    }
-
-    const box = boundsFor(framed)
-    const padding = current.cameraPadding ?? (current.framing === 'all' ? 120 : 180)
-    const detailOffset = current.mode === 'detail' ? -260 : 0
-    const availableWidth = current.mode === 'detail' ? 900 : VIEW_WIDTH - padding * 2
-    const availableHeight = VIEW_HEIGHT - padding * 2
-    const fitScale = Math.min(availableWidth / Math.max(box.width, 1), availableHeight / Math.max(box.height, 1))
-    const scale = current.framing === 'node'
-      ? Math.min(1, Math.max(0.56, fitScale))
-      : current.framing === 'subtree'
-        ? Math.min(0.98, Math.max(0.74, fitScale))
-        : Math.min(0.86, Math.max(0.62, fitScale))
+    // Visibility is resolved once by the stage so framing and rendered content agree.
+    const box = boundsFor(nodes.value)
+    // CSS uses a 1280 × 720 canvas; SVG coordinates are 1600 × 900.
+    // Reserve the actual panel/header/footer rectangles before fitting nodes.
+    const unit = VIEW_WIDTH / 1280
+    const padding = current.cameraPadding ?? 24
+    const left = 54 * unit + padding
+    const right = (current.mode === 'detail' ? 670 : 1226) * unit - padding
+    const top = 142 * unit + padding
+    const bottom = 656 * unit - padding
+    const availableWidth = right - left
+    const availableHeight = bottom - top
+    // Include the active card's small lift and its border in the fit.
+    const fitScale = Math.min(availableWidth / (box.width + 20), availableHeight / (box.height + 20))
+    const scale = Math.min(current.framing === 'all' ? 0.86 : 1, fitScale)
     const targetX = box.left + box.width / 2
     const targetY = box.top + box.height / 2
-    const viewX = VIEW_WIDTH / 2 + detailOffset
-    const viewY = VIEW_HEIGHT / 2 + (current.mode === 'detail' ? 38 : 0)
+    const viewX = (left + right) / 2
+    const viewY = (top + bottom) / 2
     return {
       transform: `translate(${viewX} ${viewY}) scale(${scale}) translate(${-targetX} ${-targetY})`,
       scale,

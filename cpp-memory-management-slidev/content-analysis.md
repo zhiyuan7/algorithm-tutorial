@@ -16,15 +16,15 @@
 
 | 源文锚点 | 核心思想 | 图谱节点或场景 | 处理方式 | 备注 |
 | --- | --- | --- | --- | --- |
-| 一.1 基本数据类型 | 类型决定值的解释与存储 | representation/address | 讲述 | 不逐条列出类型；保留整数、浮点、bool 的类别 |
+| 一.1 基本数据类型 | 类型决定值的解释与存储 | representation/address | 讲述 | 列出常见类型与字节数；注明平台差异，以 sizeof 为准 |
 | 一.2 变量名与地址 | 名字是抽象，访问落到地址 | representation/address | 详情、代码示例 | `&x` |
-| 一.3 数组 | 同类元素连续排列 | representation/layout | 公式、详情 | 地址计算公式 |
-| 一.4 结构体 | 成员布局、padding 和对齐 | representation/layout | 详情、脚注 | `#pragma pack` 为扩展且有未对齐风险 |
+| 一.3 数组 | 同类元素连续排列 | array/layout、struct/layout | 公式、详情 | 地址计算公式 |
+| 一.4 结构体 | 成员布局、padding 和对齐 | array/layout、struct/layout | 详情、脚注 | `#pragma pack` 为扩展且有未对齐风险 |
 | 二.1 已知大小和生命期 | 不必每次调用分配器 | lifetime/choice | 详情 | 与三种存储期相连 |
 | 二.2 作用域自动管理 | 退出作用域清理 | lifetime/choice、automatic/behavior | 讲述、详情 | 析构函数 |
 | 三.1 作用域与生命期 | 名字可见性不同于对象持续时间 | lifetime/distinction | 详情、示例 | 局部 static |
 | 三.2 全局与局部静态 | 程序期间存在；局部只初始化一次 | static/behavior | 详情、示例 | 三次调用输出 1、2、3 |
-| 四.1 自动存储期 | 普通局部对象随作用域结束 | automatic/behavior | 详情 | 作用域嵌套 |
+| 四.1 自动存储期 | 普通局部对象随作用域结束 | automatic/behavior | 代码、示意图 | 内外层作用域的对象生命期 |
 | 四.2 栈分配 | 典型实现中栈指针移动很快 | automatic/behavior | 讲述 | 栈是实现方式，不等同语言规则 |
 | 五.1 动态存储必要性 | 运行时决定规模和释放时机 | dynamic/need | 详情、示例 | `Image[count]` |
 | 五.2 堆、地址与指针 | 分配器管理不规则块；地址必须保存 | dynamic/need、pointer/address | 详情 | 指针本身可具不同存储期 |
@@ -59,3 +59,11 @@
 | 指针保存地址 | 留作淡化语境 | unique_ptr / shared_ptr | 地址仍在，但被所有权封装 |
 
 过渡中目标节点在来源节点淡出后出现；目标图谱以独立数据对象重新展开。
+
+## 本次讲述调整
+
+数组和结构体各有独立节点与讲解场景。作用域与存储期的比较放在静态、自动、动态存储期之后；嵌套作用域用 `outer` 与 `inner` 的代码和时间条展示。动态存储期说明运行时规模、跨作用域生命期及初始化；new/delete 进一步说明类型指针、构造与失败报告。
+
+所有代码均维护为单独 Markdown 围栏块；数组地址计算使用 LaTeX。原第 10、11、22 场景删除；保留转场前的存储整图与最后的所有权回顾。
+
+类型与存储期口径核对：[C++ 草案基本类型](https://eel.is/c++draft/basic.fundamental)、[存储期](https://eel.is/c++draft/basic.stc)、[new 表达式](https://eel.is/c++draft/expr.new)。类型表中的字节数是常见平台值，不是跨平台保证。

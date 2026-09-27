@@ -17,6 +17,15 @@ importers:
       d3:
         specifier: ^7.9.0
         version: 7.9.0
+      katex:
+        specifier: 0.16.47
+        version: 0.16.47
+      markdown-it:
+        specifier: 14.3.2
+        version: 14.3.2
+      shiki:
+        specifier: 4.4.3
+        version: 4.4.3
       vue:
         specifier: ^3.5.0
         version: 3.5.43(typescript@5.9.3)
@@ -24,6 +33,12 @@ importers:
       '@types/d3':
         specifier: ^7.4.3
         version: 7.4.3
+      '@types/katex':
+        specifier: ^0.16.8
+        version: 0.16.8
+      '@types/markdown-it':
+        specifier: ^14.2.0
+        version: 14.2.0
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
@@ -762,6 +777,9 @@ packages:
 
   '@types/hast@3.0.5':
     resolution: {integrity: sha512-rp/ezSWaD1m44dPKICGhiskI13nVr7qTloFwDa/IYkhhf5nzwP+zIQcIJh3WIFSBOy/H1PzB40jPjMDksN4F+g==}
+
+  '@types/katex@0.16.8':
+    resolution: {integrity: sha512-trgaNyfU+Xh2Tc+ABIb44a5AYUpicB3uwirOioeOkNPPbmgRNtcWyDeeFRzjPZENO9Vq8gvVqfhaaXWLlevVwg==}
 
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
@@ -3954,6 +3972,8 @@ snapshots:
   '@types/hast@3.0.5':
     dependencies:
       '@types/unist': 3.0.3
+
+  '@types/katex@0.16.8': {}
 
   '@types/linkify-it@5.0.0': {}
 

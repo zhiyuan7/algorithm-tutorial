@@ -39,7 +39,7 @@ export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>) {
       framed = nodes.value.filter(node => ids.has(node.id))
     }
 
-    if (current.framing === 'all' && current.mode === 'detail') {
+    if (current.mode === 'detail') {
       const visibleIds = current.visibleNodes === 'all'
         ? new Set(nodes.value.map(node => node.id))
         : new Set(current.visibleNodes)
@@ -49,15 +49,15 @@ export function useCamera(scene: Ref<TourScene>, nodes: Ref<LayoutNode[]>) {
     const box = boundsFor(framed)
     const padding = current.cameraPadding ?? (current.framing === 'all' ? 105 : 165)
     const compareDetail = current.mode === 'detail' && current.framing === 'all'
-    const detailOffset = compareDetail ? -440 : current.mode === 'detail' ? -275 : 0
+    const detailOffset = compareDetail ? -440 : current.mode === 'detail' ? -300 : 0
     const availableWidth = compareDetail ? 680 : current.mode === 'detail' ? 840 : VIEW_WIDTH - padding * 2
     const availableHeight = VIEW_HEIGHT - padding * 2
     const fitScale = Math.min(availableWidth / Math.max(box.width, 1), availableHeight / Math.max(box.height, 1))
     const scale = current.framing === 'node'
-      ? Math.min(1.05, Math.max(0.68, fitScale))
+      ? Math.min(1.05, fitScale)
       : current.framing === 'subtree'
-        ? Math.min(0.94, Math.max(0.68, fitScale))
-        : Math.min(0.9, Math.max(compareDetail ? 0.48 : 0.66, fitScale))
+        ? Math.min(0.94, fitScale)
+        : Math.min(0.9, fitScale)
     const targetX = box.left + box.width / 2
     const targetY = box.top + box.height / 2
     const viewX = VIEW_WIDTH / 2 + detailOffset

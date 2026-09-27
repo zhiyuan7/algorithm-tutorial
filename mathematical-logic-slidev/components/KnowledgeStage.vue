@@ -38,6 +38,7 @@ const activeDetail = computed(() => {
 })
 
 function isActiveEdge(id: string) {
+  if (scene.value.activeEdges) return scene.value.activeEdges.includes(id)
   const edge = edges.value.find(item => item.id === id)
   return !!edge && (edge.source.id === scene.value.focus || edge.target.id === scene.value.focus)
 }
@@ -60,6 +61,9 @@ function isActiveEdge(id: string) {
           v-for="edge in edges"
           :key="edge.id"
           :edge="edge"
+          :data-edge-id="edge.id"
+          :data-source="edge.source.id"
+          :data-target="edge.target.id"
           :visible="visibleEdgeIds.has(edge.id)"
           :active="isActiveEdge(edge.id)"
         />
@@ -77,6 +81,6 @@ function isActiveEdge(id: string) {
 
     <DetailPanel :node="activeNode?.data" :detail="activeDetail" :visible="scene.mode === 'detail' && !!activeDetail" />
 
-    <div class="stage-corner-label">数理逻辑 · Knowledge Map</div>
+    <div class="stage-corner-label">数理逻辑</div>
   </main>
 </template>

@@ -21,6 +21,7 @@ const semanticClass = computed(() => {
 <template>
   <g
     class="knowledge-node"
+    :data-node-id="node.id"
     :class="[semanticClass, { visible, active, dimmed }]"
     :transform="`translate(${node.x - node.width / 2} ${node.y - node.height / 2})`"
   >

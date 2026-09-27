@@ -6,7 +6,8 @@ export interface KnowledgeDetail {
   statement: string
   explanation?: string
   formula?: string
-  code?: string
+  codeExample?: string
+  flow?: string[]
   bullets?: string[]
   example?: string
   footnote?: string

@@ -62,7 +62,7 @@ export interface LayoutEdge {
 
 export interface TourScene {
   id: string
-  map: MapId | 'morph'
+  map: MapId
   focus?: string
   framing: 'node' | 'subtree' | 'all'
   mode: SemanticMode
@@ -71,6 +71,4 @@ export interface TourScene {
   visibleEdges: string[] | 'all'
   chapter: string
   headline: string
-  morphId?: 'one-to-many' | 'many-to-matrix'
-  morphPhase?: 0 | 1 | 2
 }

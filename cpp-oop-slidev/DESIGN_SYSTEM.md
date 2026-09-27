@@ -1,19 +1,9 @@
 # Design System
 
-视觉格式遵循 [course-overview-slidev](../course-overview-slidev/DESIGN_SYSTEM.md)。
+沿用总纲配色：背景 #D6BF88、纸面 #DED7CA、文字 #13254F。16:9，canvasWidth 1280；中文优先 Microsoft YaHei / Noto Sans CJK SC，代码用 Consolas / Noto Sans Mono。
 
-## 色彩与语义
+同一个 KnowledgeStage 承载 25 个状态。讲解时只显示当前节点与祖先路径，按可见节点取景；封装回顾恢复分支，对象和类型回顾恢复各自整图。Camera 900ms、Expand 520ms、Collapse 420ms。两组语义数据保持独立，原视角转换与概念变形场景已删除。
 
-沿用总纲的背景 `#D6BF88`、纸面 `#DED7CA`、深蓝文字 `#13254F` 及其全部辅助色 token。构造与继承为 teal，生命周期与工厂为 ochre，封装与函数契约为 plum，动态分派为 blue，不变量与虚析构为 wine。颜色辅助分组，关系仍通过文字和虚实线区分；组件中不新增未登记颜色。
+实线保留原有的贝塞尔曲线；虚线经过节点外侧的空白通道，使用水平、垂直直角折线，方形端点和连接。箭头大小采用固定世界坐标，避免随线宽放大。
 
-## 字体、尺寸与运动
-
-16:9，`canvasWidth: 1280`，中文 `Microsoft YaHei`；封面 66px、场景标题 31px、详情标题 33px、节点标题 22–26px。沿用总纲的 Camera 900ms、Expand 520ms、Collapse 420ms、Graph Morph 1200ms 和 `cubic-bezier(.16,1,.3,1)`。C++ 代码片段使用 Consolas 等宽字，18px。
-
-## 地图与镜头
-
-同一 `KnowledgeStage` 承载 26 个主场景状态。节点有 Overview、Concept、Summary、Detail 四层；详细解释在右侧 482px 面板。`node`、`subtree`、`all` 通过可见节点边界计算镜头，不写固定镜头坐标。实线表示概念层级，虚线表示跨分支依赖。
-
-## 变形
-
-两张图在语义数据上独立。`ObjectTypesMorph.vue` 从 `morphMapping` 读取三组源目标节点 ID，先展示源概念，再绘制映射并显现目标概念。它说明关注点从单个对象扩展到类型家族；不会把两组节点接成一张地图。
+代码源是 content/examples 中的 Markdown 代码围栏，使用 MarkdownIt + Shiki 高亮。公式由 KaTeX 渲染。右侧详情面板适配 16:9，高亮代码保留换行与缩进；虚函数表图用单继承示意，明确对象指针、表项和实际函数的关联。

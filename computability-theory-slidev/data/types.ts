@@ -3,6 +3,7 @@ export type MapId = 'computability' | 'complexity' | 'universality'
 export type SceneMapId = MapId | 'morph-a-b' | 'morph-b-c'
 
 export interface KnowledgeDetail {
+  title?: string
   eyebrow?: string
   statement: string
   explanation?: string
@@ -71,4 +72,6 @@ export interface TourScene {
   headline: string
   chapter: string
   cameraPadding?: number
+  // Only these nodes stay beside the current branch during a detail scene.
+  contextNodes?: string[]
 }

@@ -10,10 +10,15 @@
   "dependencies": {
     "@slidev/cli": "latest",
     "@slidev/theme-default": "latest",
-    "vue": "latest"
+    "vue": "latest",
+    "katex": "0.16.47",
+    "markdown-it": "14.3.2",
+    "shiki": "4.4.3"
   },
   "devDependencies": {
     "typescript": "~5.9.3",
-    "vue-tsc": "latest"
+    "vue-tsc": "latest",
+    "@types/katex": "^0.16.8",
+    "@types/markdown-it": "^14.2.0"
   }
 }

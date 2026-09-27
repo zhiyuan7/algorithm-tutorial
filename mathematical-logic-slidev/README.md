@@ -32,6 +32,8 @@ pnpm run dev
 - 总览：<http://localhost:3030/overview/>
 - 浏览器导出器：<http://localhost:3030/export/>
 
+舞台共 25 个场景（24 次点击）。原 P15 的准备场景已删除；健全性、完备性分别沿相反方向连接“可证明性”和“逻辑后承”。数学表达统一使用 LaTeX，包括正文与节点标签。
+
 ## 检查与构建
 
 ```bash
@@ -40,6 +42,15 @@ pnpm run build
 ```
 
 生产构建输出到 `dist/`。可以使用任意静态文件服务器部署该目录。
+
+导出带所有点击场景的 PNG：
+
+```bash
+pnpm exec playwright install chromium
+pnpm exec slidev export slides.md --format png --with-clicks --wait 1700 --timeout 120000 --output output/visual-qa
+```
+
+浏览器在需要导出时单独安装；安装项目依赖不会自动下载 Chromium。
 
 若部署到 GitHub Pages 的仓库子路径：
 
@@ -71,6 +82,7 @@ content-analysis.md            内容分析、修正与覆盖矩阵
 data/knowledge.ts              两张独立知识图谱
 data/tour.ts                   点击场景和讲解顺序
 components/KnowledgeStage.vue  持续知识舞台
+components/MathText.vue        LaTeX / KaTeX 数学渲染
 components/QuantifierMorph.vue 量词语义变形
 composables/                   D3 布局和镜头 framing
 styles/index.css               设计 Token 与全局样式
@@ -88,6 +100,7 @@ DESIGN_SYSTEM.md               视觉系统
 node_modules/
 dist/
 .slidev/
+output/
 ```
 
 ## 参考资料

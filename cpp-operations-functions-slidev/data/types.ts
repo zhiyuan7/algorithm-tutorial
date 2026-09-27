@@ -2,6 +2,8 @@ export type SemanticMode = 'overview' | 'concept' | 'summary' | 'detail'
 export type MapId = 'value-construction' | 'judgment-expression'
 
 export interface KnowledgeDetail {
+  title?: string
+  code?: string
   eyebrow?: string
   statement: string
   explanation?: string

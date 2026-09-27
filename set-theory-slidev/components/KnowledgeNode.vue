@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MathText from './MathText.vue'
 import { computed } from 'vue'
 import type { LayoutNode, SemanticMode } from '../data/types'
 
@@ -31,9 +32,9 @@ const semanticClass = computed(() => {
       >
         <span class="node-dot"></span>
         <div class="node-copy">
-          <div class="node-title">{{ node.data.title }}</div>
-          <div v-if="semanticClass !== 'concept'" class="node-subtitle">{{ node.data.subtitle }}</div>
-          <div v-if="semanticClass === 'summary'" class="node-summary">{{ node.data.summary }}</div>
+          <div class="node-title"><MathText :text="node.data.title" /></div>
+          <div v-if="semanticClass !== 'concept'" class="node-subtitle"><MathText :text="node.data.subtitle ?? ''" /></div>
+          <div v-if="semanticClass === 'summary'" class="node-summary"><MathText :text="node.data.summary" /></div>
         </div>
       </div>
     </foreignObject>

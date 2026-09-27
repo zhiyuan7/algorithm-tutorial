@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import MathText from './MathText.vue'
+import CodeBlock from './CodeBlock.vue'
+import VirtualDispatchDiagram from './VirtualDispatchDiagram.vue'
 import type { KnowledgeDetail, KnowledgeNodeData } from '../data/types'
 
 defineProps<{
@@ -12,9 +15,11 @@ defineProps<{
   <aside class="detail-panel" :class="{ visible }">
     <template v-if="node && detail">
       <p v-if="detail.eyebrow" class="detail-eyebrow">{{ detail.eyebrow }}</p>
-      <h2>{{ node.title }}</h2>
+      <h2>{{ detail.title ?? node.title }}</h2>
       <p class="detail-statement">{{ detail.statement }}</p>
-      <p v-if="detail.formula" class="detail-formula">{{ detail.formula }}</p>
+      <div v-if="detail.formula" class="detail-formula"><MathText :text="detail.formula" latex display /></div>
+      <CodeBlock v-if="detail.code" :key="detail.code" :name="detail.code" />
+      <VirtualDispatchDiagram v-if="detail.diagram" :phase="detail.diagram" />
       <p v-if="detail.explanation" class="detail-explanation">{{ detail.explanation }}</p>
       <ul v-if="detail.bullets?.length" class="detail-list">
         <li v-for="item in detail.bullets" :key="item">{{ item }}</li>

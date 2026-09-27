@@ -22,14 +22,19 @@ const activeMap = computed(() => scene.value.map === 'morph' ? knowledgeMaps['al
 const layout = computed(() => layouts[activeMap.value.id])
 const nodes = computed(() => layout.value.nodes)
 const edges = computed(() => layout.value.edges)
-const camera = useCamera(scene, nodes)
 
 const visibleNodeIds = computed(() => scene.value.visibleNodes === 'all'
   ? new Set(nodes.value.map(node => node.id))
   : new Set(scene.value.visibleNodes))
+const framedNodes = computed(() => nodes.value.filter(node => visibleNodeIds.value.has(node.id)))
 const visibleEdgeIds = computed(() => scene.value.visibleEdges === 'all'
   ? new Set(edges.value.map(edge => edge.id))
-  : new Set(scene.value.visibleEdges))
+  : new Set(scene.value.visibleEdges.filter(id => {
+      const edge = edges.value.find(edge => edge.id === id)
+      return edge && visibleNodeIds.value.has(edge.source.id) && visibleNodeIds.value.has(edge.target.id)
+    })))
+const framedEdges = computed(() => edges.value.filter(edge => visibleEdgeIds.value.has(edge.id)))
+const camera = useCamera(scene, framedNodes, framedEdges)
 const dimNodeIds = computed(() => new Set(scene.value.dimNodes ?? []))
 const activeNode = computed(() => nodes.value.find(node => node.id === scene.value.focus))
 const activeDetail = computed(() => {

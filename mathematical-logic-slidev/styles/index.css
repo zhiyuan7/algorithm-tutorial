@@ -351,7 +351,7 @@ body,
   top: 118px;
   right: 54px;
   width: 482px;
-  max-height: 575px;
+  max-height: calc(100% - 178px);
   box-sizing: border-box;
   padding: 31px 34px 28px;
   overflow: hidden;
@@ -400,11 +400,9 @@ body,
   border-left: 5px solid var(--teal);
   background: rgba(57, 109, 128, .10);
   color: var(--blue);
-  font-family: Cambria, "Times New Roman", serif;
   font-size: 18px;
   line-height: 1.38;
-  font-weight: 700;
-  overflow-wrap: anywhere;
+  font-weight: 400;
 }
 
 .detail-explanation,
@@ -415,7 +413,7 @@ body,
   line-height: 1.58;
 }
 
-.detail-list {
+.detail-panel .detail-list {
   margin: 16px 0 0;
   padding: 0;
   list-style: none;
@@ -484,7 +482,7 @@ body,
 .morph-stage.entered .morph-assignment { transform: translateY(0); border-left-color: var(--ochre); }
 .morph-stage.entered .morph-satisfaction { transform: translateY(0); border-left-color: var(--green); }
 
-.morph-node span {
+.morph-node > span {
   position: absolute;
   top: 35px;
   left: 18px;
@@ -590,3 +588,7 @@ body,
   .detail-panel { right: 34px; width: 440px; }
   .stage-header { left: 40px; right: 36px; }
 }
+
+/* Math uses KaTeX fonts everywhere, including node labels and headings. */
+.math-text .katex { font-size: 1em; }
+.detail-formula .katex-display { margin: 0; }

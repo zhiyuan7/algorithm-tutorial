@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from 'vue'
+import MathText from './MathText.vue'
 
 const entered = ref(false)
 onMounted(async () => {
@@ -10,15 +11,18 @@ onMounted(async () => {
 
 <template>
   <div class="morph-stage morph-ab" :class="{ entered }">
-    <div class="morph-question morph-question-source">对所有输入，算法会结束吗？</div>
-    <div class="morph-card morph-source morph-recognizable"><strong>Recognizable</strong><small>YES 终会被看见</small></div>
-    <div class="morph-card morph-source morph-decidable"><strong>Decidable</strong><small>YES / NO 都会结束</small></div>
-    <div class="morph-card morph-source morph-atm"><strong>A_TM</strong><small>停在边界之外</small></div>
-    <div class="morph-boundary">不可判定边界</div>
+    <div class="morph-question morph-question-source">程序能保证给出答案吗？</div>
+    <div class="morph-card morph-source morph-recognizable"><strong>可识别</strong><small>YES 总会被认出</small></div>
+    <div class="morph-card morph-source morph-decidable"><strong>可判定</strong><small>YES / NO 都会结束</small></div>
+    <div class="morph-card morph-source morph-halting"><strong>停机问题</strong><small>可识别，却不可判定</small></div>
 
-    <div class="morph-question morph-question-target">既然会结束，需要多少资源？</div>
-    <div class="morph-card morph-target morph-target-decidable"><strong>Decidable</strong><small>复杂度研究的任务域</small></div>
-    <div class="morph-card morph-target morph-np"><strong>NP</strong><small>证据可快速验证</small></div>
-    <div class="morph-card morph-target morph-p"><strong>P</strong><small>可以快速求解</small></div>
+    <div class="morph-question morph-question-target">既然会结束，求解与验证需要多大代价？</div>
+    <div class="morph-domain"><span>可判定的范围</span></div>
+    <div class="morph-card morph-target morph-target-decidable"><strong>可判定任务</strong><small>先保证结束，再比较代价</small></div>
+    <div class="morph-card morph-target morph-p"><strong><MathText text="$\mathrm P$" /></strong><small>可以快速求解</small></div>
+    <div class="morph-card morph-target morph-np"><strong><MathText text="$\mathrm{NP}$" /></strong><small>证据可快速验证</small></div>
+    <div class="morph-inclusion"><MathText text="$\mathrm P\subseteq\mathrm{NP}\subseteq\mathrm{Decidable}$" /></div>
+    <div class="morph-boundary"><span>不可判定问题<br>在范围之外</span></div>
+    <div class="morph-card morph-target morph-outside"><strong>停机问题</strong><small><MathText text="$\mathrm{HALT}_{\mathrm{TM}}$" /></small></div>
   </div>
 </template>

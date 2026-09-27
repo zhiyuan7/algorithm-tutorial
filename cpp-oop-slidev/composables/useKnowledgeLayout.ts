@@ -4,13 +4,12 @@ const placements: Record<string, Record<string, [number,number,number,number]>> 
     'object-root':[800,145,330,110],
     construction:[250,390,250,106], initialization:[250,655,275,106],
     lifetime:[740,390,260,106], defaults:[740,655,270,106],
-    encapsulation:[1250,390,300,128], invariant:[1070,655,245,106], 'stable-interface':[1400,655,275,106],
+    encapsulation:[1250,390,300,128], 'process-reuse':[1060,655,245,106], 'stable-interface':[1400,655,310,106],
   },
   types: {
     'types-root':[800,145,330,110],
-    inheritance:[270,390,260,106], reuse:[180,655,275,106], composition:[510,655,250,106],
-    contract:[800,390,270,106],
-    dispatch:[1320,390,275,106], factory:[1120,655,250,106], 'virtual-dtor':[1450,655,255,106],
+    inheritance:[390,390,280,106], reuse:[170,655,260,106], contract:[500,655,270,106],
+    dispatch:[1150,390,275,106], 'virtual-table':[850,655,300,106], factory:[1190,655,240,106], 'virtual-dtor':[1500,655,255,106],
   },
 }
 export function layoutKnowledgeMap(map: KnowledgeMapData) {

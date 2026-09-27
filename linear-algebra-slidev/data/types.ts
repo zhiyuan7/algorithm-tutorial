@@ -3,10 +3,12 @@ export type MapId = 'linear-language' | 'matrix-perspectives' | 'invariant-geome
 export type MorphId = 'morph-representation' | 'morph-invariants'
 
 export interface KnowledgeDetail {
+  title?: string
   eyebrow?: string
   statement: string
   explanation?: string
   formula?: string
+  formulas?: string[]
   bullets?: string[]
   example?: string
   footnote?: string
@@ -66,6 +68,7 @@ export interface TourScene {
   mode: SemanticMode
   detailKey?: string
   visibleNodes: string[] | 'all'
+  contextNodes?: string[]
   visibleEdges: string[] | 'all'
   dimNodes?: string[]
   headline?: string
